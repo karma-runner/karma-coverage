@@ -1,0 +1,29 @@
+{
+  "name": "testacular-coverage",
+  "version": "0.0.1",
+  "description": "A Testacular plugin. Generate code coverage.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/testacular/testacular-coverage.git"
+  },
+  "keywords": [
+    "testacular-plugin",
+    "preprocessor",
+    "reporter",
+    "coverage",
+    "istanbul"
+  ],
+  "author": "SATO taichi <ryushi@gmail.com>",
+  "dependencies": {
+    "istanbul": "0.1.22",
+    "dateformat": ">= 1.0.2-1.2.3"
+  },
+  "peerDependencies": {
+    "testacular": "~0.7"
+  },
+  "license": "MIT"
+}
