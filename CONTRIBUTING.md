@@ -1,3 +1,3 @@
-Please see the [Contributing to Testacular] guide for information on contributing to this project.
+Please see the [Contributing to Karma] guide for information on contributing to this project.
 
-[Contributing to Testacular]: https://github.com/testacular/testacular/blob/master/CONTRIBUTING.md
+[Contributing to Karma]: https://github.com/karma-runner/karma/blob/master/CONTRIBUTING.md

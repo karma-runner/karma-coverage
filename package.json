@@ -1,17 +1,17 @@
 {
-  "name": "testacular-coverage",
+  "name": "karma-coverage",
   "version": "0.0.1",
-  "description": "A Testacular plugin. Generate code coverage.",
+  "description": "A Karma plugin. Generate code coverage.",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/testacular/testacular-coverage.git"
+    "url": "git://github.com/karma-runner/karma-coverage.git"
   },
   "keywords": [
-    "testacular-plugin",
+    "karma-plugin",
     "preprocessor",
     "reporter",
     "coverage",
@@ -23,7 +23,7 @@
     "dateformat": ">= 1.0.2-1.2.3"
   },
   "peerDependencies": {
-    "testacular": "~0.7"
+    "karma": "~0.9"
   },
   "license": "MIT"
 }
