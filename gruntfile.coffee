@@ -34,10 +34,21 @@ module.exports = (grunt) ->
       unit:
         src: [ 'test/mocha-globals.coffee', 'test/*.spec.coffee' ]
 
+    bump:
+      options:
+        commitMessage: 'chore: release v%VERSION%'
+        pushTo: 'upstream'
+
   grunt.loadNpmTasks 'grunt-contrib-jshint'
   grunt.loadNpmTasks 'grunt-simple-mocha'
+  grunt.loadNpmTasks 'grunt-bump'
+  grunt.loadNpmTasks 'grunt-npm'
 
   grunt.registerTask 'test', ['simplemocha']
   grunt.registerTask 'default', ['jshint', 'test']
 
-
+  grunt.registerTask 'release', 'Build, bump and publish to NPM.', (type) ->
+    grunt.task.run [
+      "bump:#{type||'patch'}"
+      'npm-publish'
+    ]
