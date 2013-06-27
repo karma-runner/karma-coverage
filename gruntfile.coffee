@@ -32,7 +32,7 @@ module.exports = (grunt) ->
         ui: 'bdd'
         reporter: 'dot'
       unit:
-        src: [ 'test/*.spec.coffee' ]
+        src: [ 'test/mocha-globals.coffee', 'test/*.spec.coffee' ]
 
   grunt.loadNpmTasks 'grunt-contrib-jshint'
   grunt.loadNpmTasks 'grunt-simple-mocha'
