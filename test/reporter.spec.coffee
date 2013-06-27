@@ -1,3 +1,22 @@
+# TODO(vojta): extract this into a separate file
+sinon = require 'sinon'
+chai = require 'chai'
+
+# publish globals that all specs can use
+global.expect = chai.expect
+global.should = chai.should()
+global.sinon = sinon
+
+# chai plugins
+chai.use(require 'sinon-chai')
+
+beforeEach ->
+  global.sinon = sinon.sandbox.create()
+
+afterEach ->
+  global.sinon.restore()
+
+
 #==============================================================================
 # lib/reporters/Coverage.js module
 #==============================================================================
@@ -5,8 +24,12 @@ describe 'reporter', ->
   events = require 'events'
   path = require 'path'
   istanbul = require 'istanbul'
-  helper = require '../../../lib/helper'
-  browser = require '../../../lib/browser'
+
+  # TODO(vojta): remove the dependency on karma
+  helper = require '../node_modules/karma/lib/helper'
+  browser = require '../node_modules/karma/lib/browser'
+  require('../node_modules/karma/lib/logger').setup 'INFO', false, []
+
   Browser = browser.Browser
   Collection = browser.Collection
   nodeMocks = require 'mocks'
@@ -25,7 +48,7 @@ describe 'reporter', ->
     hasKey: ->
     set: ->
   mockStore.create = sinon.stub().returns mockFslookup
-  
+
   mockAdd = sinon.spy()
   mockDispose = sinon.spy()
   mockCollector = class Collector
@@ -46,12 +69,9 @@ describe 'reporter', ->
       Collector: mockCollector
       Report: create: mockReportCreate
     dateformat: require 'dateformat'
-    '../logger': require '../../../lib/logger'
-    '../helper' : mockHelper
-
 
   beforeEach ->
-    m = loadFile __dirname + '/../../../lib/reporters/Coverage.js', mocks
+    m = loadFile __dirname + '/../lib/reporter.js', mocks
 
   describe 'BasePathStore', ->
     options = store = null
@@ -60,9 +80,6 @@ describe 'reporter', ->
       options =
         basePath: 'path/to/coverage/'
       store = new m.BasePathStore options
-
-    it 'should call create', ->
-      expect(mockStore.create).to.have.been.calledWith 'fslookup'
 
     describe 'toKey', ->
       it 'should concat relative path and basePath', ->
@@ -94,6 +111,11 @@ describe 'reporter', ->
   describe 'CoverageReporter', ->
     rootConfig = emitter = reporter = null
     browsers = fakeChrome = fakeOpera = null
+    mockLogger = create: (name) ->
+      debug: -> null
+      info: -> null
+      warn: -> null
+      error: -> null
 
     makeBrowser = (id, name, collection, emitter) ->
       browser = new Browser id, collection, emitter
@@ -106,7 +128,7 @@ describe 'reporter', ->
       rootConfig =
         coverageReporter: dir: 'path/to/coverage/'
       emitter = new events.EventEmitter
-      reporter = new m.CoverageReporter rootConfig, emitter
+      reporter = new m.CoverageReporter rootConfig, emitter, mockHelper, mockLogger
       browsers = new Collection emitter
       # fake user agent only for testing
       # cf. helper.browserFullNameToShort
@@ -140,7 +162,7 @@ describe 'reporter', ->
       args = mockMkdir.lastCall.args
       expect(args[0]).to.deep.equal path.resolve(rootConfig.coverageReporter.dir)
       args[1]()
-      expect(mockFs.writeFile).to.have.been.calledWith 
+      expect(mockFs.writeFile).to.have.been.calledWith
       args2 = mockFs.writeFile.lastCall.args
       expect(args2[1]).to.deep.equal JSON.stringify(result.coverage)
 
