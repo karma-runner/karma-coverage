@@ -161,4 +161,3 @@ describe 'reporter', ->
       mockMkdir.getCall(0).args[1]()
       expect(mockReportCreate).to.have.been.called
       expect(mockWriteReport).to.have.been.called
-      expect(mockDispose).to.have.been.called
