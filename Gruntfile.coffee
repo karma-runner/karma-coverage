@@ -43,6 +43,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-simple-mocha'
   grunt.loadNpmTasks 'grunt-bump'
   grunt.loadNpmTasks 'grunt-npm'
+  grunt.loadNpmTasks 'grunt-auto-release'
 
   grunt.registerTask 'test', ['simplemocha']
   grunt.registerTask 'default', ['jshint', 'test']

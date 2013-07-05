@@ -35,7 +35,8 @@
     "sinon": "~1.7.3",
     "chai": "~1.7.2",
     "sinon-chai": "~2.4.0",
-    "grunt-bump": "0.0.6",
-    "grunt-npm": "0.0.2"
+    "grunt-bump": "~0.0.7",
+    "grunt-npm": "~0.0.2",
+    "grunt-auto-release": "~0.0.1"
   }
 }
