@@ -12,8 +12,8 @@
   },
   "keywords": [
     "karma-plugin",
-    "preprocessor",
-    "reporter",
+    "karma-preprocessor",
+    "karma-reporter",
     "coverage",
     "istanbul"
   ],
