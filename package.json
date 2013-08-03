@@ -23,7 +23,7 @@
     "dateformat": "~1.0.6"
   },
   "peerDependencies": {
-    "karma": "~0.9"
+    "karma": ">=0.9"
   },
   "license": "MIT",
   "devDependencies": {
