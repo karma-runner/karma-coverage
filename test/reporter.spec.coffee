@@ -118,7 +118,8 @@ describe 'reporter', ->
       fakeOpera = makeBrowser 'bbb', 'Opera/9.80 Mac OS X Version/12.00', browsers, emitter
       browsers.add fakeChrome
       browsers.add fakeOpera
-      reporter.onRunStart browsers
+      reporter.onRunStart()
+      browsers.forEach (b) -> reporter.onBrowserStart b
       mockFs.writeFile.reset()
       mockMkdir.reset()
 
