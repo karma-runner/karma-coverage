@@ -51,7 +51,7 @@ module.exports = function(config) {
 
 ### Options
 #### type
-**Type:** String
+**Type:** String/Array
 
 **Possible Values:**
   * `html` (default)
@@ -67,6 +67,13 @@ coverageReporter = {
   type : 'text',
   dir : 'coverage/',
   file : 'coverage.txt'
+}
+```
+To generate multiple reports you might set `type` option as array, like this.
+```javascript
+coverageReporter = {
+  type : ['html','cobertura']
+  dir : 'coverage/',
 }
 ```
 If no filename is given, it will write the output to the console.
