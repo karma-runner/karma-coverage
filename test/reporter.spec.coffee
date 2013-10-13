@@ -23,12 +23,6 @@ describe 'reporter', ->
   mockStore = sinon.spy()
   mockStore.mix = (fn, obj) ->
     istanbul.Store.mix fn, obj
-  mockFslookup = sinon.stub
-    keys: ->
-    get: ->
-    hasKey: ->
-    set: ->
-  mockStore.create = sinon.stub().returns mockFslookup
 
   mockAdd = sinon.spy()
   mockDispose = sinon.spy()
@@ -56,40 +50,26 @@ describe 'reporter', ->
   beforeEach ->
     m = loadFile __dirname + '/../lib/reporter.js', mocks
 
-  describe 'BasePathStore', ->
+  describe 'SourceCacheStore', ->
     options = store = null
 
     beforeEach ->
       options =
-        basePath: 'path/to/coverage/'
-      store = new m.BasePathStore options
+        sourceCache: { './foo': 'TEST_SRC_DATA' }
+      store = new m.SourceCacheStore options
 
-    describe 'toKey', ->
-      it 'should concat relative path and basePath', ->
-        expect(store.toKey './foo').to.deep.equal path.join(options.basePath, 'foo')
+    it 'should fail on call to keys', ->
+      expect(-> store.keys()).to.throw()
 
-      it 'should does not concat absolute path and basePath', ->
-        expect(store.toKey '/foo').to.deep.equal '/foo'
+    it 'should call get and check cache data', ->
+      expect(store.get('./foo')).to.equal 'TEST_SRC_DATA'
 
-    it 'should call keys and delegate to inline store', ->
-      store.keys()
-      expect(mockFslookup.keys).to.have.been.called
+    it 'should call hasKey and check cache data', ->
+      expect(store.hasKey('./foo')).to.be.true
+      expect(store.hasKey('./bar')).to.be.false
 
-    it 'should call get and delegate to inline store', ->
-      key = './path/to/js'
-      store.get(key)
-      expect(mockFslookup.get).to.have.been.calledWith path.join(options.basePath, key)
-
-    it 'should call hasKey and delegate to inline store', ->
-      key = './path/to/js'
-      store.hasKey(key)
-      expect(mockFslookup.hasKey).to.have.been.calledWith path.join(options.basePath, key)
-
-    it 'should call set and delegate to inline store', ->
-      key = './path/to/js'
-      content = 'any content'
-      store.set key, content
-      expect(mockFslookup.set).to.have.been.calledWith path.join(options.basePath, key), content
+    it 'should fail on call to set', ->
+      expect(-> store.set()).to.throw()
 
   describe 'CoverageReporter', ->
     rootConfig = emitter = reporter = null
