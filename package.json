@@ -38,5 +38,13 @@
     "grunt-bump": "~0.0.7",
     "grunt-npm": "~0.0.2",
     "grunt-auto-release": "~0.0.1"
-  }
+  },
+  "contributors": [
+    "Friedel Ziegelmayer <friedel.ziegelmayer@gmail.com>",
+    "Allen Bierbaum <abierbaum@gmail.com>",
+    "Ron Derksen <ron.derksen@informaat.nl>",
+    "Julie <ju.ralph@gmail.com>",
+    "Friedel Ziegelmayer <dignifiedquire@gmail.com>",
+    "Petar Manev <petar.manev2010@gmail.com>"
+  ]
 }
