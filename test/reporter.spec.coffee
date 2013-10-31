@@ -43,6 +43,7 @@ describe 'reporter', ->
     isDefined: (v) -> helper.isDefined v
     merge: (v...) -> helper.merge v...
     mkdirIfNotExists: mockMkdir
+    normalizeWinPath: (path) -> helper.normalizeWinPath path
 
   mocks =
     fs: mockFs
@@ -108,9 +109,10 @@ describe 'reporter', ->
 
     beforeEach ->
       rootConfig =
+        basePath: '/base'
         coverageReporter: dir: 'path/to/coverage/'
       emitter = new events.EventEmitter
-      reporter = new m.CoverageReporter rootConfig, emitter, mockHelper, mockLogger
+      reporter = new m.CoverageReporter rootConfig, mockHelper, mockLogger
       browsers = new Collection emitter
       # fake user agent only for testing
       # cf. helper.browserFullNameToShort
@@ -125,7 +127,7 @@ describe 'reporter', ->
 
     it 'has no pending file writings', ->
       done = sinon.spy()
-      emitter.emit 'exit', done
+      reporter.onExit done
       expect(done).to.have.been.called
 
     it 'has no coverage', ->
@@ -147,7 +149,7 @@ describe 'reporter', ->
       expect(mockAdd).to.have.been.calledWith result.coverage
       expect(mockMkdir).to.have.been.called
       args = mockMkdir.lastCall.args
-      expect(args[0]).to.deep.equal path.resolve(rootConfig.coverageReporter.dir)
+      expect(args[0]).to.deep.equal path.resolve('/base', rootConfig.coverageReporter.dir)
       args[1]()
       expect(mockFs.writeFile).to.have.been.calledWith
       args2 = mockFs.writeFile.lastCall.args
@@ -157,8 +159,8 @@ describe 'reporter', ->
       reporter.onRunComplete browsers
       expect(mockMkdir).to.have.been.calledTwice
       dir = rootConfig.coverageReporter.dir
-      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve(dir, fakeChrome.name)
-      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve(dir, fakeOpera.name)
+      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve('/base', dir, fakeChrome.name)
+      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve('/base', dir, fakeOpera.name)
       mockMkdir.getCall(0).args[1]()
       expect(mockReportCreate).to.have.been.called
       expect(mockWriteReport).to.have.been.called
