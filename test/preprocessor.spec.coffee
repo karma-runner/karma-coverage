@@ -12,6 +12,12 @@ describe 'preprocessor', ->
   }
   '''
 
+  ORIGINAL_COFFEE_CODE = '''
+  if a
+    something()
+  else
+    other()
+  '''
 
   mockLogger = create: ->
     error: -> throw new Error(util.format.apply util, arguments)
@@ -49,4 +55,18 @@ describe 'preprocessor', ->
 
       vm.runInNewContext preprocessedCode, sandbox
       expect(sandbox.__coverage__).to.have.ownProperty './file.js'
+      done()
+
+  it 'should preprocess the coffee code', (done) ->
+    process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress']
+    file = new File '/base/path/file.coffee'
+
+    process ORIGINAL_COFFEE_CODE, file, (preprocessedCode) ->
+      sandbox =
+        a: true
+        something: ->
+
+      vm.runInNewContext preprocessedCode, sandbox
+      expect(file.path).to.equal '/base/path/file.js'
+      expect(sandbox.__coverage__).to.have.ownProperty './file.coffee'
       done()
