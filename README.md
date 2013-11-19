@@ -60,6 +60,7 @@ module.exports = function(config) {
   * `text`
   * `text-summary`
   * `cobertura` (xml format supported by Jenkins)
+  * `teamcity` (code coverage System Messages for TeamCity)
 
 If you set `type` to `text` or `text-summary`, you may set the `file` option, like this.
 ```javascript
