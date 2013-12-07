@@ -78,6 +78,19 @@ If no filename is given, it will write the output to the console.
 **Description:** This will be used to output coverage reports. When
   you set a relative path, the directory is resolved against the `basePath`.
 
+#### multiple reporters
+You can use multiple reporters, by providing array of options.
+
+```javascript
+coverageReporter: {
+  reporters:[
+    {type: 'html', dir:'coverage/'},
+    {type: 'teamcity'},
+    {type: 'text-summary'}
+  ],
+}
+```
+ 
 ----
 
 For more information on Karma see the [homepage].
