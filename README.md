@@ -44,7 +44,12 @@ module.exports = function(config) {
     coverageReporter: {
       type : 'html',
       dir : 'coverage/'
-    }
+    },
+
+    // add 'karma-coverage' to the list of plugins to load
+    plugins: [
+      'karma-coverage'
+    ]
   });
 };
 ```
