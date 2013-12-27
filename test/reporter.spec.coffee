@@ -122,7 +122,6 @@ describe 'reporter', ->
       browsers.add fakeOpera
       reporter.onRunStart()
       browsers.forEach (b) -> reporter.onBrowserStart b
-      mockFs.writeFile.reset()
       mockMkdir.reset()
 
     it 'has no pending file writings', ->
@@ -139,21 +138,6 @@ describe 'reporter', ->
     it 'should handle no result', ->
       reporter.onBrowserComplete fakeChrome, undefined
       expect(mockAdd).not.to.have.been.called
-
-    it 'should store coverage json', ->
-      result =
-        coverage:
-          aaa: 1
-          bbb: 2
-      reporter.onBrowserComplete fakeChrome, result
-      expect(mockAdd).to.have.been.calledWith result.coverage
-      expect(mockMkdir).to.have.been.called
-      args = mockMkdir.lastCall.args
-      expect(args[0]).to.deep.equal path.resolve('/base', rootConfig.coverageReporter.dir)
-      args[1]()
-      expect(mockFs.writeFile).to.have.been.calledWith
-      args2 = mockFs.writeFile.lastCall.args
-      # expect(args2[1]).to.deep.equal JSON.stringify(result.coverage)
 
     it 'should make reports', ->
       reporter.onRunComplete browsers
