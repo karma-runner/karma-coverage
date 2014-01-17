@@ -110,7 +110,12 @@ describe 'reporter', ->
     beforeEach ->
       rootConfig =
         basePath: '/base'
-        coverageReporter: dir: 'path/to/coverage/'
+        coverageReporter:
+          dir: 'path/to/coverage/'
+          reporters: [
+            { type: 'html', dir:'coverage/' }
+            { type: 'teamcity' }
+          ]
       emitter = new events.EventEmitter
       reporter = new m.CoverageReporter rootConfig, mockHelper, mockLogger
       browsers = new Collection emitter
@@ -157,10 +162,11 @@ describe 'reporter', ->
 
     it 'should make reports', ->
       reporter.onRunComplete browsers
-      expect(mockMkdir).to.have.been.calledTwice
+      expect(mockMkdir.callCount.should.equal browsers.length * rootConfig.coverageReporter.reporters.length)
       dir = rootConfig.coverageReporter.dir
-      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve('/base', dir, fakeChrome.name)
-      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve('/base', dir, fakeOpera.name)
+      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve(rootConfig.basePath, dir, fakeChrome.name)
+      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve(rootConfig.basePath, dir, fakeOpera.name)
+      # reporters
       mockMkdir.getCall(0).args[1]()
       expect(mockReportCreate).to.have.been.called
       expect(mockWriteReport).to.have.been.called
