@@ -164,9 +164,10 @@ describe 'reporter', ->
       reporter.onRunComplete browsers
       expect(mockMkdir.callCount.should.equal browsers.length * rootConfig.coverageReporter.reporters.length)
       dir = rootConfig.coverageReporter.dir
-      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve(rootConfig.basePath, dir, fakeChrome.name)
-      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve(rootConfig.basePath, dir, fakeOpera.name)
-      # reporters
+      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve(rootConfig.basePath, rootConfig.coverageReporter.reporters[0].dir, fakeChrome.name)
+      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve(rootConfig.basePath, rootConfig.coverageReporter.reporters[0].dir, fakeOpera.name)
+      expect(mockMkdir.getCall(2).args[0]).to.deep.equal path.resolve(rootConfig.basePath, dir, fakeChrome.name)
+      expect(mockMkdir.getCall(3).args[0]).to.deep.equal path.resolve(rootConfig.basePath, dir, fakeOpera.name)
       mockMkdir.getCall(0).args[1]()
       expect(mockReportCreate).to.have.been.called
       expect(mockWriteReport).to.have.been.called
