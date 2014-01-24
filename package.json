@@ -19,7 +19,7 @@
   ],
   "author": "SATO taichi <ryushi@gmail.com>",
   "dependencies": {
-    "istanbul": "~0.2.3",
+    "istanbul": "~0.1.45",
     "ibrik":  "~1.0.1",
     "dateformat": "~1.0.6"
   },
