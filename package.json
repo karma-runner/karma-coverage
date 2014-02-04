@@ -15,12 +15,16 @@
     "karma-preprocessor",
     "karma-reporter",
     "coverage",
-    "istanbul"
+    "istanbul",
+    "ibrik"
   ],
   "author": "SATO taichi <ryushi@gmail.com>",
+  "contributors": [
+    "Kyle Welsby <kyle@mekyle.com> (http://mekyle.com)"
+  ],
   "dependencies": {
     "istanbul": "~0.1.45",
-    "ibrik":  "~1.0.1",
+    "ibrik":  "git+https://github.com/HBOCodeLabs/ibrik.git#304cd84936d33cf38a05a1a4fe58c82d54ff6cfa",
     "dateformat": "~1.0.6"
   },
   "peerDependencies": {
