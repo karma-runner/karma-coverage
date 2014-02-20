@@ -143,8 +143,8 @@ describe 'reporter', ->
       reporter.onRunComplete browsers
       expect(mockMkdir).to.have.been.calledTwice
       dir = rootConfig.coverageReporter.dir
-      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve('/base', dir, fakeChrome.name)
-      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve('/base', dir, fakeOpera.name)
+      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve('/base', dir, '1') # Hard-coded is ok because it mirrors .getCall order
+      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve('/base', dir, '2')
       mockMkdir.getCall(0).args[1]()
       expect(mockReportCreate).to.have.been.called
       expect(mockWriteReport).to.have.been.called
