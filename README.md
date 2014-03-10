@@ -19,6 +19,16 @@ You can simple do it by:
 npm install karma-coverage --save-dev
 ```
 
+Once you have the dependency installed, you have to include it in your plugin array on your `karma.conf.js` file:
+
+```json
+plugins: [
+    'karma-jasmine',
+    'karma-phantomjs-launcher',
+    'karma-coverage'
+]
+```
+
 ## Configuration
 Following code shows the default configuration...
 ```js
