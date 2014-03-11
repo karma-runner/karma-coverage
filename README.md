@@ -64,7 +64,7 @@ module.exports = function(config) {
 
 If you set `type` to `text` or `text-summary`, you may set the `file` option, like this.
 ```javascript
-coverageReporter = {
+coverageReporter: {
   type : 'text',
   dir : 'coverage/',
   file : 'coverage.txt'
