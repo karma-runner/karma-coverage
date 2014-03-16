@@ -8,11 +8,10 @@ describe 'reporter', ->
 
   # TODO(vojta): remove the dependency on karma
   helper = require '../node_modules/karma/lib/helper'
-  browser = require '../node_modules/karma/lib/browser'
+  Browser = require '../node_modules/karma/lib/browser'
+  Collection = require '../node_modules/karma/lib/browser_collection'
   require('../node_modules/karma/lib/logger').setup 'INFO', false, []
 
-  Browser = browser.Browser
-  Collection = browser.Collection
   nodeMocks = require 'mocks'
   loadFile = nodeMocks.loadFile
   m = null
@@ -100,13 +99,6 @@ describe 'reporter', ->
       warn: -> null
       error: -> null
 
-    makeBrowser = (id, name, collection, emitter) ->
-      browser = new Browser id, collection, emitter
-      browser.onRegister
-        id: id + name
-        name: name
-      browser
-
     beforeEach ->
       rootConfig =
         basePath: '/base'
@@ -116,8 +108,8 @@ describe 'reporter', ->
       browsers = new Collection emitter
       # fake user agent only for testing
       # cf. helper.browserFullNameToShort
-      fakeChrome = makeBrowser 'aaa', 'Windows NT 6.1 Chrome/16.0.912.75', browsers, emitter
-      fakeOpera = makeBrowser 'bbb', 'Opera/9.80 Mac OS X Version/12.00', browsers, emitter
+      fakeChrome = new Browser 'aaa', 'Windows NT 6.1 Chrome/16.0.912.75', browsers, emitter
+      fakeOpera = new Browser 'bbb', 'Opera/9.80 Mac OS X Version/12.00', browsers, emitter
       browsers.add fakeChrome
       browsers.add fakeOpera
       reporter.onRunStart()
