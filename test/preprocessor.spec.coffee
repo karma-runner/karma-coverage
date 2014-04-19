@@ -2,7 +2,7 @@ vm = require 'vm'
 util = require 'util'
 
 describe 'preprocessor', ->
-  createPreprocessor = require '../lib/preprocessor'
+  createPreprocessor = require('../lib/preprocessor').createCoveragePreprocessor
 
   ORIGINAL_CODE = '''
   if (a) {
