@@ -84,6 +84,38 @@ module.exports = function(config) {
 };
 
 ```
+... or if you want to use an other preprocessor or you just happen to have
+  JavaScript files with .coffee extensions, the Ibrik/Coffee preprocessor may
+  be turned off by passing the coffeeCompilerOff option:
+```js
+// karma.conf.js
+module.exports = function(config) {
+  config.set({
+    files: [
+      'src/**/*.coffee',
+      'test/**/*.coffee'
+    ],
+
+    // coverage reporter generates the coverage
+    reporters: ['progress', 'coverage'],
+
+    preprocessors: {
+      // source files, that you wanna generate coverage for:
+      'src/*.coffee': ['coffee', 'coverage'],
+      // other files to be compiled:
+      'test/**/*.coffee': ['coffee']
+    },
+
+    // optionally, configure the reporter
+    coverageReporter: {
+      coffeeCompilerOff: true,
+      type: 'html',
+      dir:  'coverage/'
+    }
+  });
+};
+
+```
 
 ### Options
 #### type
