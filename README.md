@@ -86,7 +86,7 @@ module.exports = function(config) {
 ```
 ... or if you want to use an other preprocessor or you just happen to have
   JavaScript files with .coffee extensions, the Ibrik/Coffee preprocessor may
-  be turned off by passing the coffeeCompilerOff option:
+  be turned off by passing the compileCoffee option set to a falsy value.
 ```js
 // karma.conf.js
 module.exports = function(config) {
@@ -108,7 +108,7 @@ module.exports = function(config) {
 
     // optionally, configure the reporter
     coverageReporter: {
-      coffeeCompilerOff: true,
+      compileCoffee: false, // Turning coffee preprocessors off
       type: 'html',
       dir:  'coverage/'
     }
@@ -158,6 +158,23 @@ coverageReporter: {
   ],
 }
 ```
+
+#### compileCoffee
+**Type:** Boolean
+
+**Description:** By default karma-coverage will process any .coffee files. You
+  can turn this feature off to prevent collision with other preprocessors or
+  errors in case you have JavaScript content in .coffee files.
+
+**Default:** true
+
+```javascript
+coverageReporter: {
+  compileCoffee: false, // Turning coffee preprocessors off
+  // ...
+}
+```
+
 
 ----
 
