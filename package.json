@@ -22,7 +22,7 @@
     "dateformat": "~1.0.6",
     "ibrik": "~1.1.1",
     "istanbul": "~0.2.3",
-    "minimatch": "^0.3.0"
+    "minimatch": "~0.3.0"
   },
   "peerDependencies": {
     "karma": ">=0.9"
