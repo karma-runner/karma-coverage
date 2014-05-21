@@ -72,7 +72,7 @@ describe 'preprocessor', ->
       done()
 
   it 'should not preprocess the coffee code', (done) ->
-    process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'], {compileCoffee: false}
+    process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'], {instrumenter: {'**/*.coffee': 'istanbul'}}
     file = new File '/base/path/file.coffee'
 
     process ORIGINAL_CODE, file, (preprocessedCode) ->
