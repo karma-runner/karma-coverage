@@ -35,7 +35,7 @@ describe 'preprocessor', ->
 
 
   it 'should not do anything if coverage reporter is not used', (done) ->
-    process = createPreprocessor mockLogger, null, ['dots', 'progress']
+    process = createPreprocessor mockLogger, null, ['dots', 'progress'], {}
     file = new File '/base/path/file.js'
 
     process ORIGINAL_CODE, file, (preprocessedCode) ->
@@ -45,7 +45,7 @@ describe 'preprocessor', ->
 
 
   it 'should preprocess the code', (done) ->
-    process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress']
+    process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'], {}
     file = new File '/base/path/file.js'
 
     process ORIGINAL_CODE, file, (preprocessedCode) ->
@@ -58,7 +58,7 @@ describe 'preprocessor', ->
       done()
 
   it 'should preprocess the coffee code', (done) ->
-    process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress']
+    process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'], {}
     file = new File '/base/path/file.coffee'
 
     process ORIGINAL_COFFEE_CODE, file, (preprocessedCode) ->
@@ -68,5 +68,19 @@ describe 'preprocessor', ->
 
       vm.runInNewContext preprocessedCode, sandbox
       expect(file.path).to.equal '/base/path/file.js'
+      expect(sandbox.__coverage__).to.have.ownProperty './file.coffee'
+      done()
+
+  it 'should not preprocess the coffee code', (done) ->
+    process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'], {instrumenter: {'**/*.coffee': 'istanbul'}}
+    file = new File '/base/path/file.coffee'
+
+    process ORIGINAL_CODE, file, (preprocessedCode) ->
+      sandbox =
+        a: true
+        something: ->
+
+      vm.runInNewContext preprocessedCode, sandbox
+      expect(file.path).to.equal '/base/path/file.coffee'
       expect(sandbox.__coverage__).to.have.ownProperty './file.coffee'
       done()

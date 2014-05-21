@@ -65,7 +65,8 @@ module.exports = function(config) {
     preprocessors: {
       // source files, that you wanna generate coverage for
       // do not include tests or libraries
-      // (these files will be instrumented by Istanbul via Ibrik)
+      // (these files will be instrumented by Istanbul via Ibrik unless
+      // specified otherwise in coverageReporter.instrumenter)
       'src/*.coffee': ['coverage'],
 
       // note: project files will already be converted to
@@ -126,6 +127,21 @@ coverageReporter: {
   ],
 }
 ```
+
+#### instrumenter
+By default karma-coverage will preprocess any .coffee files via Ibrik, all
+  other files via Istanbul. Overrides may be defined by associating globstar
+  patterns with instrumenters:
+
+```javascript
+coverageReporter: {
+  instrumenter: {
+    '**/*.coffee': 'istanbul' // No Ibrik/coffee preprocessing for this repo
+  },
+  // ...
+}
+```
+
 
 ----
 
