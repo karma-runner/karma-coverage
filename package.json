@@ -19,9 +19,10 @@
   ],
   "author": "SATO taichi <ryushi@gmail.com>",
   "dependencies": {
+    "dateformat": "~1.0.6",
+    "ibrik": "~1.1.1",
     "istanbul": "~0.2.3",
-    "ibrik":  "~1.1.1",
-    "dateformat": "~1.0.6"
+    "minimatch": "^0.3.0"
   },
   "peerDependencies": {
     "karma": ">=0.9"

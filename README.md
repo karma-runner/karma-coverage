@@ -65,7 +65,8 @@ module.exports = function(config) {
     preprocessors: {
       // source files, that you wanna generate coverage for
       // do not include tests or libraries
-      // (these files will be instrumented by Istanbul via Ibrik)
+      // (these files will be instrumented by Istanbul via Ibrik unless
+      // specified otherwise in coverageReporter.instrumenter)
       'src/*.coffee': ['coverage'],
 
       // note: project files will already be converted to
@@ -79,38 +80,6 @@ module.exports = function(config) {
     coverageReporter: {
       type : 'html',
       dir : 'coverage/'
-    }
-  });
-};
-
-```
-... or if you want to use an other preprocessor or you just happen to have
-  JavaScript files with .coffee extensions, the Ibrik/Coffee preprocessor may
-  be turned off by passing the compileCoffee option set to a falsy value.
-```js
-// karma.conf.js
-module.exports = function(config) {
-  config.set({
-    files: [
-      'src/**/*.coffee',
-      'test/**/*.coffee'
-    ],
-
-    // coverage reporter generates the coverage
-    reporters: ['progress', 'coverage'],
-
-    preprocessors: {
-      // source files, that you wanna generate coverage for:
-      'src/*.coffee': ['coffee', 'coverage'],
-      // other files to be compiled:
-      'test/**/*.coffee': ['coffee']
-    },
-
-    // optionally, configure the reporter
-    coverageReporter: {
-      compileCoffee: false, // Turning coffee preprocessors off
-      type: 'html',
-      dir:  'coverage/'
     }
   });
 };
@@ -159,18 +128,16 @@ coverageReporter: {
 }
 ```
 
-#### compileCoffee
-**Type:** Boolean
-
-**Description:** By default karma-coverage will process any .coffee files. You
-  can turn this feature off to prevent collision with other preprocessors or
-  errors in case you have JavaScript content in .coffee files.
-
-**Default:** true
+#### instrumenter
+By default karma-coverage will preprocess any .coffee files via Ibrik, all
+  other files via Istanbul. Overrides may be defined by associating globstar
+  patterns with instrumenters:
 
 ```javascript
 coverageReporter: {
-  compileCoffee: false, // Turning coffee preprocessors off
+  instrumenter: {
+    '**/*.coffee': 'istanbul' // No Ibrik/coffee preprocessing for this repo
+  },
   // ...
 }
 ```
