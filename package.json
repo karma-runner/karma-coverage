@@ -21,7 +21,8 @@
   "dependencies": {
     "istanbul": "~0.2.10",
     "ibrik": "~1.1.1",
-    "dateformat": "~1.0.6"
+    "dateformat": "~1.0.6",
+    "minimatch": "~0.3.0"
   },
   "peerDependencies": {
     "karma": ">=0.9"
