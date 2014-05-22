@@ -65,7 +65,8 @@ module.exports = function(config) {
     preprocessors: {
       // source files, that you wanna generate coverage for
       // do not include tests or libraries
-      // (these files will be instrumented by Istanbul via Ibrik)
+      // (these files will be instrumented by Istanbul via Ibrik unless
+      // specified otherwise in coverageReporter.instrumenter)
       'src/*.coffee': ['coverage'],
 
       // note: project files will already be converted to
@@ -124,6 +125,27 @@ coverageReporter: {
     {type: 'teamcity'},
     {type: 'text-summary'}
   ],
+}
+```
+
+#### instrumenter
+Karma-coverage infers the instrumenter regarding of the file extension.
+  The .coffee files are by default covered using
+  [Ibrik](https://github.com/Constellation/ibrik) (an
+  [Istanbul](https://github.com/gotwarlost/istanbul) analog for
+  CoffeeScript files). It is possible to override this behavior and point out an
+  instrumenter for the files matching a specific pattern.
+  To do so, you need to declare an object under with the keys representing the
+  pattern to match, and the instrumenter to apply. The matching will be done
+  using [minimatch](https://github.com/isaacs/minimatch).
+  If two patterns match, the last one will take the precedence.
+
+```javascript
+coverageReporter: {
+  instrumenter: {
+    '**/*.coffee': 'istanbul' // Force the use of the Istanbul instrumenter to cover CoffeeScript files
+  },
+  // ...
 }
 ```
 
