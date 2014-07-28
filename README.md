@@ -115,6 +115,43 @@ If no filename is given, it will write the output to the console.
 **Description:** This will be used to output coverage reports. When
   you set a relative path, the directory is resolved against the `basePath`.
 
+#### subdir
+**Type:** String
+
+**Description**: This will be used in complement of the `coverageReporter.dir`
+option to generate the full output directory path. By default, the output
+directory is set to `./config.dir/BROWSER_NAME/`, this option allows you to
+custom the second part. You can either pass a string or a function which will be
+called with the `browser` passed as the only argument.
+
+```javascript
+coverageReporter: {
+  dir: 'coverage',
+  subdir: '.'
+  // Would output the results into: .'/coverage/'
+}
+```
+
+```javascript
+coverageReporter: {
+  dir: 'coverage',
+  subdir: 'report'
+  // Would output the results into: .'/coverage/report/'
+}
+```
+
+```javascript
+coverageReporter: {
+  dir: 'coverage',
+  subdir: function(browser) {
+    // normalization process to keep a consistent browser name accross different
+    // OS
+    return browser.toLowerCase().split(/[ /-]/)[0];
+  }
+  // Would output the results into: './coverage/firefox/'
+}
+```
+
 #### multiple reporters
 You can use multiple reporters, by providing array of options.
 

@@ -2,6 +2,7 @@
 # lib/reporters/Coverage.js module
 #==============================================================================
 describe 'reporter', ->
+  _ = require 'lodash'
   events = require 'events'
   path = require 'path'
   istanbul = require 'istanbul'
@@ -137,6 +138,45 @@ describe 'reporter', ->
       dir = rootConfig.coverageReporter.dir
       expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve('/base', dir, fakeChrome.name)
       expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve('/base', dir, fakeOpera.name)
+      mockMkdir.getCall(0).args[1]()
+      expect(mockReportCreate).to.have.been.called
+      expect(mockWriteReport).to.have.been.called
+
+    it 'should support a string for the subdir option', ->
+      customConfig = _.merge {}, rootConfig,
+        subdir: 'test'
+        coverageReporter:
+          subdir: 'test'
+
+      reporter = new m.CoverageReporter customConfig, mockHelper, mockLogger
+      reporter.onRunStart()
+      browsers.forEach (b) -> reporter.onBrowserStart b
+
+      reporter.onRunComplete browsers
+      expect(mockMkdir).to.have.been.calledTwice
+      dir = customConfig.coverageReporter.dir
+      subdir = customConfig.coverageReporter.subdir
+      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve('/base', dir, subdir)
+      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve('/base', dir, subdir)
+      mockMkdir.getCall(0).args[1]()
+      expect(mockReportCreate).to.have.been.called
+      expect(mockWriteReport).to.have.been.called
+
+    it 'should support a function for the subdir option', ->
+      customConfig = _.merge {}, rootConfig,
+        subdir: 'test'
+        coverageReporter:
+          subdir: (browserName) -> browserName.toLowerCase().split(/[ /-]/)[0]
+
+      reporter = new m.CoverageReporter customConfig, mockHelper, mockLogger
+      reporter.onRunStart()
+      browsers.forEach (b) -> reporter.onBrowserStart b
+
+      reporter.onRunComplete browsers
+      expect(mockMkdir).to.have.been.calledTwice
+      dir = customConfig.coverageReporter.dir
+      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve('/base', dir, 'chrome')
+      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve('/base', dir, 'opera')
       mockMkdir.getCall(0).args[1]()
       expect(mockReportCreate).to.have.been.called
       expect(mockWriteReport).to.have.been.called
