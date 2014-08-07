@@ -1,6 +1,6 @@
 {
   "name": "karma-coverage",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "A Karma plugin. Generate code coverage.",
   "main": "lib/index.js",
   "scripts": {
