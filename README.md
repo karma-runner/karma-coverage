@@ -98,6 +98,7 @@ module.exports = function(config) {
   * `text-summary`
   * `cobertura` (xml format supported by Jenkins)
   * `teamcity` (code coverage System Messages for TeamCity)
+  * `json` (html no longer produces json reports)
 
 If you set `type` to `text` or `text-summary`, you may set the `file` option, like this.
 ```javascript
@@ -108,6 +109,9 @@ coverageReporter: {
 }
 ```
 If no filename is given, it will write the output to the console.
+
+You can set the `dir` option with `json` (just as with `html`) to indicate where the
+json file will be written.
 
 #### dir
 **Type:** String
