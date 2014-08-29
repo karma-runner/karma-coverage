@@ -57,9 +57,18 @@ describe 'preprocessor', ->
       expect(sandbox.__coverage__).to.have.ownProperty './file.js'
       done()
 
-  it 'should preprocess the coffee code', (done) ->
-    process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'], {}
-    file = new File '/base/path/file.coffee'
+  it 'should preprocess the fake code', (done) ->
+    fakeInstanbulLikeInstrumenter  = ->
+    fakeInstanbulLikeInstrumenter::instrument = (_a, _b, callback) ->
+      callback()
+      return
+    process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'],
+      instrumenters:
+       fakeInstanbulLike :
+          Instrumenter : fakeInstanbulLikeInstrumenter
+      instrumenter:
+        '**/*.fake': 'fakeInstanbulLike'
+    file = new File '/base/path/file.fake'
 
     process ORIGINAL_COFFEE_CODE, file, (preprocessedCode) ->
       sandbox =
@@ -67,9 +76,30 @@ describe 'preprocessor', ->
         something: ->
 
       vm.runInNewContext preprocessedCode, sandbox
-      expect(file.path).to.equal '/base/path/file.js'
-      expect(sandbox.__coverage__).to.have.ownProperty './file.coffee'
+      expect(file.path).to.equal '/base/path/file.fake'
       done()
+
+  it 'should preprocess the fake code with the config options', (done) ->
+    fakeInstanbulLikeInstrumenter = (options) ->
+      expect(options.experimental).to.be.ok
+      return
+    fakeInstanbulLikeInstrumenter::instrument = (_a, _b, callback) ->
+      callback()
+      return
+
+    process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'],
+      instrumenters:
+        fakeInstanbulLike:
+          Instrumenter: fakeInstanbulLikeInstrumenter
+      instrumenterOptions:
+        fakeInstanbulLike:
+          experimental: yes
+      instrumenter:
+        '**/*.fake': 'fakeInstanbulLike'
+
+    file = new File '/base/path/file.fake'
+
+    process ORIGINAL_COFFEE_CODE, file, done
 
   it 'should not preprocess the coffee code', (done) ->
     process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'],
