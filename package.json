@@ -1,6 +1,6 @@
 {
   "name": "karma-coverage",
-  "version": "0.2.1",
+  "version": "0.2.6",
   "description": "A Karma plugin. Generate code coverage.",
   "main": "lib/index.js",
   "scripts": {
@@ -19,26 +19,28 @@
   ],
   "author": "SATO taichi <ryushi@gmail.com>",
   "dependencies": {
-    "istanbul": "~0.2.3",
-    "ibrik":  "~1.1.1",
-    "dateformat": "~1.0.6"
+    "istanbul": "~0.3.0",
+    "ibrik": "~1.1.1",
+    "dateformat": "~1.0.6",
+    "minimatch": "~0.3.0"
   },
   "peerDependencies": {
     "karma": ">=0.9"
   },
   "license": "MIT",
   "devDependencies": {
-    "mocks": "0.0.11",
-    "grunt": "~0.4.1",
-    "grunt-simple-mocha": "~0.4.0",
-    "grunt-contrib-jshint": "~0.6.0",
-    "karma": "~0.12.0",
-    "sinon": "~1.7.3",
     "chai": "~1.7.2",
-    "sinon-chai": "~2.4.0",
+    "grunt": "~0.4.1",
+    "grunt-auto-release": "~0.0.1",
     "grunt-bump": "~0.0.7",
+    "grunt-contrib-jshint": "~0.6.0",
     "grunt-npm": "~0.0.2",
-    "grunt-auto-release": "~0.0.1"
+    "grunt-simple-mocha": "~0.4.0",
+    "karma": "~0.12.0",
+    "lodash": "^2.4.1",
+    "mocks": "0.0.11",
+    "sinon": "~1.7.3",
+    "sinon-chai": "~2.4.0"
   },
   "contributors": [
     "Friedel Ziegelmayer <friedel.ziegelmayer@gmail.com>",
