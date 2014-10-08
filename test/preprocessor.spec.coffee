@@ -54,7 +54,7 @@ describe 'preprocessor', ->
         something: ->
 
       vm.runInNewContext preprocessedCode, sandbox
-      expect(sandbox.__coverage__).to.have.ownProperty './file.js'
+      expect(sandbox.__coverage__).to.have.ownProperty 'file.js'
       done()
 
   it 'should preprocess the coffee code', (done) ->
@@ -68,7 +68,7 @@ describe 'preprocessor', ->
 
       vm.runInNewContext preprocessedCode, sandbox
       expect(file.path).to.equal '/base/path/file.js'
-      expect(sandbox.__coverage__).to.have.ownProperty './file.coffee'
+      expect(sandbox.__coverage__).to.have.ownProperty 'file.coffee'
       done()
 
   it 'should not preprocess the coffee code', (done) ->
@@ -84,7 +84,7 @@ describe 'preprocessor', ->
 
       vm.runInNewContext preprocessedCode, sandbox
       expect(file.path).to.equal '/base/path/file.coffee'
-      expect(sandbox.__coverage__).to.have.ownProperty './file.coffee'
+      expect(sandbox.__coverage__).to.have.ownProperty 'file.coffee'
       done()
 
   it 'should fail if invalid instrumenter provided', (done) ->
