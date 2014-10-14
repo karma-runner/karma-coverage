@@ -152,6 +152,22 @@ coverageReporter: {
 }
 ```
 
+#### watermarks
+**Type:** Object
+
+**Description:** This will be used to set the coverage threshold colors. The first number is the threshold between Red and Yellow. The second number is the threshold between Yellow and Green.
+
+```javascript
+coverageReporter: {
+  watermarks: {
+    statements: [ 50, 75 ],
+    functions: [ 50, 75 ],
+    branches: [ 50, 75 ],
+    lines: [ 50, 75 ]
+  }
+}
+```
+
 #### multiple reporters
 You can use multiple reporters, by providing array of options.
 
