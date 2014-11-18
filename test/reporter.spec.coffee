@@ -237,7 +237,7 @@ describe 'reporter', ->
       expect(mockReportCreate).to.have.been.called
       expect(mockWriteReport).to.have.been.called
 
-    it 'should not create directory if reporting to console', ->
+    it 'should not create directory if reporting text* to console', ->
       run = ->
         reporter = new m.CoverageReporter rootConfig, mockHelper, mockLogger
         reporter.onRunStart()
@@ -250,6 +250,13 @@ describe 'reporter', ->
       ]
       run()
       expect(mockMkdir).not.to.have.been.called
+
+    it 'should create directory if reporting text* to file', ->
+      run = ->
+        reporter = new m.CoverageReporter rootConfig, mockHelper, mockLogger
+        reporter.onRunStart()
+        browsers.forEach (b) -> reporter.onBrowserStart b
+        reporter.onRunComplete browsers
 
       rootConfig.coverageReporter.reporters = [{ type: 'text', file: 'file' }]
       run()
