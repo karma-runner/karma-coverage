@@ -1,4 +1,4 @@
-# karma-coverage [![Build Status](https://travis-ci.org/karma-runner/karma-coverage.png?branch=master)](https://travis-ci.org/karma-runner/karma-coverage)
+# karma-coverage [![Build Status](https://travis-ci.org/karma-runner/karma-coverage.svg?branch=master)](https://travis-ci.org/karma-runner/karma-coverage)
 
 > Generate code coverage using [Istanbul].
 
@@ -20,8 +20,10 @@ npm install karma-coverage --save-dev
 ```
 
 ## Configuration
-Following code shows the default configuration...
-```js
+
+The following code shows a simple usage:
+
+```javascript
 // karma.conf.js
 module.exports = function(config) {
   config.set({
@@ -37,7 +39,7 @@ module.exports = function(config) {
       // source files, that you wanna generate coverage for
       // do not include tests or libraries
       // (these files will be instrumented by Istanbul)
-      'src/*.js': ['coverage']
+      'src/**/*.js': ['coverage']
     },
 
     // optionally, configure the reporter
@@ -49,8 +51,9 @@ module.exports = function(config) {
 };
 ```
 
-Example use with a CoffeeScript project...
-```js
+Example use with a CoffeeScript project:
+
+```javascript
 // karma.conf.js
 module.exports = function(config) {
   config.set({
@@ -67,7 +70,7 @@ module.exports = function(config) {
       // do not include tests or libraries
       // (these files will be instrumented by Istanbul via Ibrik unless
       // specified otherwise in coverageReporter.instrumenter)
-      'src/*.coffee': ['coverage'],
+      'src/**/*.coffee': ['coverage'],
 
       // note: project files will already be converted to
       // JavaScript via coverage preprocessor.
@@ -83,12 +86,47 @@ module.exports = function(config) {
     }
   });
 };
+```
 
+Here is an advanced usage of karma-coverage, using severals reporters:
+
+```javascript
+// karma.conf.js
+module.exports = function(config) {
+  config.set({
+    files: [
+      'src/**/*.js',
+      'test/**/*.js'
+    ],
+    reporters: ['progress', 'coverage'],
+    preprocessors: {
+      'src/**/*.js': ['coverage']
+    },
+    coverageReporter: {
+      // specify a common output directory
+      dir: 'build/reports/coverage',
+      reporters: [
+        // reporters not supporting the `file` property
+        { type: 'html', subdir: 'report-html' },
+        { type: 'lcov', subdir: 'report-lcov' },
+        // reporters supporting the `file` property, use `subdir` to directly
+        // output them in the `dir` directory
+        { type: 'cobertura', subdir: '.', file: 'cobertura.txt' },
+        { type: 'lcovonly', subdir: '.', file: 'report-lcovonly.txt' },
+        { type: 'teamcity', subdir: '.', file: 'teamcity.txt' },
+        { type: 'text', subdir: '.', file: 'text.txt' },
+        { type: 'text-summary', subdir: '.', file: 'text-summary.txt' },
+      ]
+    }
+  });
+});
 ```
 
 ### Options
 #### type
 **Type:** String
+
+**Description:** Specify a reporter type.
 
 **Possible Values:**
   * `html` (default)
@@ -98,16 +136,6 @@ module.exports = function(config) {
   * `text-summary`
   * `cobertura` (xml format supported by Jenkins)
   * `teamcity` (code coverage System Messages for TeamCity)
-
-If you set `type` to `text` or `text-summary`, you may set the `file` option, like this.
-```javascript
-coverageReporter: {
-  type : 'text',
-  dir : 'coverage/',
-  file : 'coverage.txt'
-}
-```
-If no filename is given, it will write the output to the console.
 
 #### dir
 **Type:** String
@@ -121,8 +149,8 @@ If no filename is given, it will write the output to the console.
 **Description**: This will be used in complement of the `coverageReporter.dir`
 option to generate the full output directory path. By default, the output
 directory is set to `./config.dir/BROWSER_NAME/`, this option allows you to
-custom the second part. You can either pass a string or a function which will be
-called with the `browser` passed as the only argument.
+custom the second part. You can either pass a `string` or a `function` which will be
+called with the browser name passed as the only argument.
 
 ```javascript
 coverageReporter: {
@@ -152,6 +180,18 @@ coverageReporter: {
 }
 ```
 
+#### file
+
+If you choose the `cobertura`, `lcovonly`, `teamcity`, `text` or `text-summary` reporters, you may set the `file` option to specify an output file.
+
+```javascript
+coverageReporter: {
+  type : 'text',
+  dir : 'coverage/',
+  file : 'coverage.txt'
+}
+```
+
 #### multiple reporters
 You can use multiple reporters, by providing array of options.
 
@@ -167,12 +207,12 @@ coverageReporter: {
 
 #### instrumenter
 Karma-coverage infers the instrumenter regarding of the file extension.
-  The .coffee files are by default covered using
+  The `.coffee` files are by default covered using
   [Ibrik](https://github.com/Constellation/ibrik) (an
   [Istanbul](https://github.com/gotwarlost/istanbul) analog for
   CoffeeScript files). It is possible to override this behavior and point out an
   instrumenter for the files matching a specific pattern.
-  To do so, you need to declare an object under with the keys representing the
+  To do so, you need to declare an object under with the keys represents the
   pattern to match, and the instrumenter to apply. The matching will be done
   using [minimatch](https://github.com/isaacs/minimatch).
   If two patterns match, the last one will take the precedence.
