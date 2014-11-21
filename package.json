@@ -20,7 +20,7 @@
   "author": "SATO taichi <ryushi@gmail.com>",
   "dependencies": {
     "istanbul": "~0.3.0",
-    "ibrik": "~1.1.1",
+    "ibrik": "~2.0.0",
     "dateformat": "~1.0.6",
     "minimatch": "~0.3.0"
   },
