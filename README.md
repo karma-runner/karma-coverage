@@ -46,6 +46,7 @@ module.exports = function(config) {
     coverageReporter: {
       type : 'html',
       dir : 'coverage/'
+      absolutePath: true
     }
   });
 };
@@ -142,6 +143,12 @@ module.exports = function(config) {
 
 **Description:** This will be used to output coverage reports. When
   you set a relative path, the directory is resolved against the `basePath`.
+  
+#### absolutePath
+**Type:** String
+
+**Description:** This will be used to output coverage reports. When
+  you set to true, the directory is not resolved against the `basePath` but with absolute path.
 
 #### subdir
 **Type:** String
