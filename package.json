@@ -1,6 +1,6 @@
 {
   "name": "karma-coverage",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "description": "A Karma plugin. Generate code coverage.",
   "main": "lib/index.js",
   "scripts": {
@@ -20,7 +20,6 @@
   "author": "SATO taichi <ryushi@gmail.com>",
   "dependencies": {
     "istanbul": "~0.3.0",
-    "ibrik": "~2.0.0",
     "dateformat": "~1.0.6",
     "minimatch": "~0.3.0"
   },
