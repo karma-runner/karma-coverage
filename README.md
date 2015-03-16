@@ -136,6 +136,7 @@ module.exports = function(config) {
   * `text-summary`
   * `cobertura` (xml format supported by Jenkins)
   * `teamcity` (code coverage System Messages for TeamCity)
+  * `json` (json format supported by [`grunt-istanbul-coverage`](https://github.com/daniellmb/grunt-istanbul-coverage))
 
 #### dir
 **Type:** String
