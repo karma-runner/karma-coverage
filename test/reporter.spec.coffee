@@ -122,6 +122,44 @@ describe 'reporter', ->
       expect(mockReportCreate).to.have.been.called
       expect(mockWriteReport).to.have.been.called
 
+    it 'should merge reports', ->
+      customConfig = _.merge {}, rootConfig,
+        coverageReporter:
+          merge: true
+
+      reporter = new m.CoverageReporter customConfig, mockHelper, mockLogger
+      reporter.onRunStart()
+      browsers.forEach (b) -> reporter.onBrowserStart b
+
+      reporter.onRunComplete browsers
+      expect(mockMkdir).to.have.been.calledOnce
+      dir = customConfig.coverageReporter.dir
+      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve('/base', dir, '' )
+      mockMkdir.getCall(0).args[1]()
+      expect(mockReportCreate).to.have.been.called
+      expect(mockWriteReport).to.have.been.called
+
+    it 'should make and merge reports', ->
+      customConfig = _.merge {}, rootConfig,
+        coverageReporter:
+          merge: true
+          single: true
+          mergedDir : 'all'
+
+      reporter = new m.CoverageReporter customConfig, mockHelper, mockLogger
+      reporter.onRunStart()
+      browsers.forEach (b) -> reporter.onBrowserStart b
+
+      reporter.onRunComplete browsers
+      expect(mockMkdir).to.have.been.calledThrice
+      dir = customConfig.coverageReporter.dir
+      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve('/base', dir, fakeChrome.name )
+      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve('/base', dir, fakeOpera.name )
+      expect(mockMkdir.getCall(2).args[0]).to.deep.equal path.resolve('/base', dir, 'all' )
+      mockMkdir.getCall(0).args[1]()
+      expect(mockReportCreate).to.have.been.called
+      expect(mockWriteReport).to.have.been.called
+
     it 'should support a string for the subdir option', ->
       customConfig = _.merge {}, rootConfig,
         coverageReporter:
