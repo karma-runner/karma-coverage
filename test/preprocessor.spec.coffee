@@ -1,6 +1,8 @@
 vm = require 'vm'
 util = require 'util'
 
+coverageMap = require '../lib/coverageMap'
+
 describe 'preprocessor', ->
   createPreprocessor = require '../lib/preprocessor'
 
@@ -124,3 +126,33 @@ describe 'preprocessor', ->
           '**/*.coffee': 'madeup'
     expect(work).to.throw()
     done()
+
+  it 'should add coverageMap when including all sources', (done) ->
+    process = createPreprocessor mockLogger, '/base/path', ['coverage'], { includeAllSources: true }
+    file = new File '/base/path/file.js'
+
+    coverageMap.reset()
+
+    process ORIGINAL_CODE, file, (preprocessedCode) ->
+      expect(coverageMap.get()['./file.js']).to.exist
+      done()
+
+  it 'should not add coverageMap when not including all sources', (done) ->
+    process = createPreprocessor mockLogger, '/base/path', ['coverage'], { includeAllSources: false }
+    file = new File '/base/path/file.js'
+
+    coverageMap.reset()
+
+    process ORIGINAL_CODE, file, (preprocessedCode) ->
+      expect(coverageMap.get()['./file.js']).to.not.exist
+      done()
+
+  it 'should not add coverageMap in the default state', (done) ->
+    process = createPreprocessor mockLogger, '/base/path', ['coverage'], {}
+    file = new File '/base/path/file.js'
+
+    coverageMap.reset()
+
+    process ORIGINAL_CODE, file, (preprocessedCode) ->
+      expect(coverageMap.get()['./file.js']).to.not.exist
+      done()

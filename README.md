@@ -209,6 +209,20 @@ coverageReporter: {
 }
 ```
 
+#### includeAllSources
+**Type:** Boolean
+
+You can opt to include all sources files, as indicated by the coverage preprocessor, in your code coverage data, even if there are no tests covering them. (Default `false`)
+
+```javascript
+coverageReporter: {
+  type : 'text',
+  dir : 'coverage/',
+  file : 'coverage.txt',
+  includeAllSources: true
+}
+```
+
 #### multiple reporters
 You can use multiple reporters, by providing array of options.
 

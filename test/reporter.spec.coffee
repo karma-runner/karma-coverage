@@ -38,6 +38,9 @@ describe 'reporter', ->
     merge: (v...) -> helper.merge v...
     mkdirIfNotExists: mockMkdir
     normalizeWinPath: (path) -> helper.normalizeWinPath path
+  mockCoverageMap =
+    add: sinon.spy()
+    get: sinon.spy()
 
   mocks =
     fs: mockFs
@@ -46,6 +49,7 @@ describe 'reporter', ->
       Collector: mockCollector
       Report: create: mockReportCreate
     dateformat: require 'dateformat'
+    './coverageMap': mockCoverageMap
 
   beforeEach ->
     m = loadFile __dirname + '/../lib/reporter.js', mocks
@@ -246,3 +250,46 @@ describe 'reporter', ->
       rootConfig.coverageReporter.reporters = [{ type: 'text-summary', file: 'file' }]
       run()
       expect(mockMkdir).to.have.been.calledTwice
+
+    it 'should support including all sources', ->
+      customConfig = _.merge {}, rootConfig,
+        coverageReporter:
+          dir: 'defaultdir'
+          includeAllSources: true
+
+      mockCoverageMap.get.reset()
+      mockAdd.reset()
+
+      reporter = new m.CoverageReporter customConfig, mockHelper, mockLogger
+      reporter.onRunStart()
+      browsers.forEach (b) -> reporter.onBrowserStart b
+
+      expect(mockCoverageMap.get).to.have.been.called
+      expect(mockAdd).to.have.been.calledWith mockCoverageMap.get.returnValues[0]
+
+    it 'should not retrieve the coverageMap if we aren\'t including all sources', ->
+      customConfig = _.merge {}, rootConfig,
+        coverageReporter:
+          dir: 'defaultdir'
+          includeAllSources: false
+
+      mockCoverageMap.get.reset()
+
+      reporter = new m.CoverageReporter customConfig, mockHelper, mockLogger
+      reporter.onRunStart()
+      browsers.forEach (b) -> reporter.onBrowserStart b
+
+      expect(mockCoverageMap.get).not.to.have.been.called
+
+    it 'should default to not including all sources', ->
+      customConfig = _.merge {}, rootConfig,
+        coverageReporter:
+          dir: 'defaultdir'
+
+      mockCoverageMap.get.reset()
+
+      reporter = new m.CoverageReporter customConfig, mockHelper, mockLogger
+      reporter.onRunStart()
+      browsers.forEach (b) -> reporter.onBrowserStart b
+
+      expect(mockCoverageMap.get).not.to.have.been.called
