@@ -19,6 +19,11 @@ You can simple do it by:
 npm install karma-coverage --save-dev
 ```
 
+If you need CoffeeScript support, you should also install Ibrik:
+```bash
+npm install ibrik --save-dev
+```
+
 ## Configuration
 
 The following code shows a simple usage:
@@ -68,8 +73,6 @@ module.exports = function(config) {
     preprocessors: {
       // source files, that you wanna generate coverage for
       // do not include tests or libraries
-      // (these files will be instrumented by Istanbul via Ibrik unless
-      // specified otherwise in coverageReporter.instrumenter)
       'src/**/*.coffee': ['coverage'],
 
       // note: project files will already be converted to
@@ -79,10 +82,12 @@ module.exports = function(config) {
       'test/**/*.coffee': ['coffee']
     },
 
-    // optionally, configure the reporter
+    // you need to manually configure Ibrik to instrument CoffeeScript files
     coverageReporter: {
-      type : 'html',
-      dir : 'coverage/'
+        instrumenters: { ibrik: require('ibrik') },
+        instrumenter: {
+            'src/**/*.coffee': 'ibrik'
+        }
     }
   });
 };
