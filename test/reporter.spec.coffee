@@ -34,6 +34,7 @@ describe 'reporter', ->
   mockReportCreate = sinon.stub().returns writeReport: mockWriteReport
   mockMkdir = sinon.spy()
   mockHelper =
+    _: helper._
     isDefined: (v) -> helper.isDefined v
     merge: (v...) -> helper.merge v...
     mkdirIfNotExists: mockMkdir
