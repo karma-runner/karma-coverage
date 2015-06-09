@@ -223,6 +223,20 @@ coverageReporter: {
 }
 ```
 
+#### sourceStore
+**Type:** istanbul.Store
+
+You can opt to specify a source store allowing for external coverage collectors access to the instrumented code.
+
+```javascript
+coverageReporter: {
+  type : 'text',
+  dir : 'coverage/',
+  file : 'coverage.txt',
+  sourceStore : require('istanbul').Store.create('fslookup')
+}
+```
+
 #### multiple reporters
 You can use multiple reporters, by providing array of options.
 
