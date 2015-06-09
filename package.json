@@ -19,27 +19,31 @@
   ],
   "author": "SATO taichi <ryushi@gmail.com>",
   "dependencies": {
-    "istanbul": "~0.3.0",
-    "dateformat": "~1.0.6",
-    "minimatch": "~0.3.0"
+    "istanbul": "^0.3.0",
+    "dateformat": "^1.0.6",
+    "minimatch": "^2.0.8"
   },
   "peerDependencies": {
     "karma": ">=0.9"
   },
   "license": "MIT",
   "devDependencies": {
-    "chai": "~1.7.2",
-    "grunt": "~0.4.1",
-    "grunt-auto-release": "~0.0.1",
-    "grunt-bump": "~0.0.7",
-    "grunt-contrib-jshint": "~0.6.0",
-    "grunt-npm": "~0.0.2",
-    "grunt-simple-mocha": "~0.4.0",
-    "karma": "~0.12.0",
-    "lodash": "^2.4.1",
+    "chai": "^2.3.0",
+    "eslint": "^0.22.1",
+    "eslint-config-standard": "^2.0.1",
+    "eslint-plugin-react": "^2.5.0",
+    "grunt": "^0.4.1",
+    "grunt-bump": "^0.3.1",
+    "grunt-conventional-changelog": "^1.2.2",
+    "grunt-eslint": "^14.0.0",
+    "grunt-npm": "^0.0.2",
+    "grunt-simple-mocha": "^0.4.0",
+    "karma": "^0.12.0",
+    "load-grunt-tasks": "^3.2.0",
+    "lodash": "^3.9.3",
     "mocks": "0.0.11",
-    "sinon": "~1.7.3",
-    "sinon-chai": "~2.4.0"
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.8.0"
   },
   "contributors": [
     "Friedel Ziegelmayer <friedel.ziegelmayer@gmail.com>",
