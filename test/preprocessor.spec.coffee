@@ -1,6 +1,8 @@
 vm = require 'vm'
 util = require 'util'
 
+helper = {_: require 'lodash'}
+
 coverageMap = require '../lib/coverageMap'
 
 describe 'preprocessor', ->
@@ -37,7 +39,7 @@ describe 'preprocessor', ->
 
 
   it 'should not do anything if coverage reporter is not used', (done) ->
-    process = createPreprocessor mockLogger, null, ['dots', 'progress'], {}
+    process = createPreprocessor mockLogger, helper, null, ['dots', 'progress'], {}
     file = new File '/base/path/file.js'
 
     process ORIGINAL_CODE, file, (preprocessedCode) ->
@@ -47,7 +49,7 @@ describe 'preprocessor', ->
 
 
   it 'should preprocess the code', (done) ->
-    process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'], {}
+    process = createPreprocessor mockLogger, helper, '/base/path', ['coverage', 'progress'], {}
     file = new File '/base/path/file.js'
 
     process ORIGINAL_CODE, file, (preprocessedCode) ->
@@ -64,7 +66,7 @@ describe 'preprocessor', ->
     fakeInstanbulLikeInstrumenter::instrument = (_a, _b, callback) ->
       callback()
       return
-    process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'],
+    process = createPreprocessor mockLogger, helper, '/base/path', ['coverage', 'progress'],
       instrumenters:
        fakeInstanbulLike :
           Instrumenter : fakeInstanbulLikeInstrumenter
@@ -89,7 +91,7 @@ describe 'preprocessor', ->
       callback()
       return
 
-    process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'],
+    process = createPreprocessor mockLogger, helper, '/base/path', ['coverage', 'progress'],
       instrumenters:
         fakeInstanbulLike:
           Instrumenter: fakeInstanbulLikeInstrumenter
@@ -104,7 +106,7 @@ describe 'preprocessor', ->
     process ORIGINAL_COFFEE_CODE, file, done
 
   it 'should not preprocess the coffee code', (done) ->
-    process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'],
+    process = createPreprocessor mockLogger, helper, '/base/path', ['coverage', 'progress'],
       instrumenter:
         '**/*.coffee': 'istanbul'
     file = new File '/base/path/file.coffee'
@@ -121,14 +123,14 @@ describe 'preprocessor', ->
 
   it 'should fail if invalid instrumenter provided', (done) ->
     work = ->
-      createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'],
+      createPreprocessor mockLogger, helper, '/base/path', ['coverage', 'progress'],
         instrumenter:
           '**/*.coffee': 'madeup'
     expect(work).to.throw()
     done()
 
   it 'should add coverageMap when including all sources', (done) ->
-    process = createPreprocessor mockLogger, '/base/path', ['coverage'], { includeAllSources: true }
+    process = createPreprocessor mockLogger, helper, '/base/path', ['coverage'], { includeAllSources: true }
     file = new File '/base/path/file.js'
 
     coverageMap.reset()
@@ -138,7 +140,7 @@ describe 'preprocessor', ->
       done()
 
   it 'should not add coverageMap when not including all sources', (done) ->
-    process = createPreprocessor mockLogger, '/base/path', ['coverage'], { includeAllSources: false }
+    process = createPreprocessor mockLogger, helper, '/base/path', ['coverage'], { includeAllSources: false }
     file = new File '/base/path/file.js'
 
     coverageMap.reset()
@@ -148,7 +150,7 @@ describe 'preprocessor', ->
       done()
 
   it 'should not add coverageMap in the default state', (done) ->
-    process = createPreprocessor mockLogger, '/base/path', ['coverage'], {}
+    process = createPreprocessor mockLogger, helper, '/base/path', ['coverage'], {}
     file = new File '/base/path/file.js'
 
     coverageMap.reset()
