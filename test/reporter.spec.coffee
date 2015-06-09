@@ -355,3 +355,26 @@ describe 'reporter', ->
       expect(options.args[1].watermarks.branches).to.deep.equal(mockDefaultWatermarks.branches)
       expect(options.args[1].watermarks.functions).to.deep.equal(mockDefaultWatermarks.functions)
       expect(options.args[1].watermarks.lines).to.deep.equal(watermarks.lines)
+
+    it 'should not write reports after disposing the collector', ->
+      run = ->
+        reporter = new m.CoverageReporter rootConfig, mockHelper, mockLogger
+        reporter.onRunStart()
+        browsers.forEach (b) -> reporter.onBrowserStart b
+        reporter.onRunComplete browsers
+
+      rootConfig.coverageReporter.reporters = [
+        { type: 'text' }
+        { type: 'html' }
+      ]
+
+      mockDispose.reset()
+      mockWriteReport.reset()
+      mockMkdir.reset()
+
+      run()
+
+      mockMkdir.getCall(0).args[1]()
+
+      expect(mockDispose).not.to.have.been.calledBefore mockWriteReport
+
