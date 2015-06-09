@@ -1,3 +1,12 @@
+<a name"0.4.1"></a>
+### 0.4.1 (2015-06-09)
+
+#### Features
+
+* **preprocessor:** Add sourcemap support ([de3b738b](https://github.com/karma-runner/karma-coverage/commit/de3b738b), closes [#109](https://github.com/karma-runner/karma-coverage/issues/109))
+* **reporter:** add check coverage thresholds ([bc63b158](https://github.com/karma-runner/karma-coverage/commit/bc63b158), closes [#21](https://github.com/karma-runner/karma-coverage/issues/21))
+
+
 <a name"0.4.0"></a>
 ## 0.4.0 (2015-06-09)
 
@@ -13,13 +22,8 @@
 
 #### Breaking Changes
 
-* 
-Karma is no longer a `peerDependency` so it needs to be installed
-manually.
-
-Ref https://github.com/karma-runner/integration-tests/issues/5
-
- ([eebcc989](https://github.com/karma-runner/karma-coverage/commit/eebcc989))
+* Karma is no longer a `peerDependency` so it needs to be installed
+manually. Ref https://github.com/karma-runner/integration-tests/issues/5 ([eebcc989](https://github.com/karma-runner/karma-coverage/commit/eebcc989))
 
 
 <a name"0.3.1"></a>
