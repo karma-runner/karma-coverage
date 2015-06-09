@@ -56,7 +56,7 @@ describe 'reporter', ->
       Report: create: mockReportCreate
       config: defaultConfig: sinon.stub().returns(reporting: watermarks: mockDefaultWatermarks)
     dateformat: require 'dateformat'
-    './coverageMap': mockCoverageMap
+    './coverage-map': mockCoverageMap
 
   beforeEach ->
     m = loadFile __dirname + '/../lib/reporter.js', mocks
@@ -377,4 +377,3 @@ describe 'reporter', ->
       mockMkdir.getCall(0).args[1]()
 
       expect(mockDispose).not.to.have.been.calledBefore mockWriteReport
-

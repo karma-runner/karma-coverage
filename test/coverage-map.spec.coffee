@@ -1,4 +1,4 @@
-coverageMap = require '../lib/coverageMap'
+coverageMap = require '../lib/coverage-map'
 coverageObj = { path: './path.js', otherThings: 'that are in instrumented code' }
 
 describe 'coverageMap', ->

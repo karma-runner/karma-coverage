@@ -3,7 +3,7 @@ util = require 'util'
 
 helper = {_: require 'lodash'}
 
-coverageMap = require '../lib/coverageMap'
+coverageMap = require '../lib/coverage-map'
 
 describe 'preprocessor', ->
   createPreprocessor = require '../lib/preprocessor'
