@@ -23,9 +23,6 @@
     "dateformat": "^1.0.6",
     "minimatch": "^2.0.8"
   },
-  "peerDependencies": {
-    "karma": ">=0.9"
-  },
   "license": "MIT",
   "devDependencies": {
     "chai": "^2.3.0",
