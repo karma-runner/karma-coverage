@@ -21,7 +21,11 @@ module.exports = function (grunt) {
     bump: {
       options: {
         commitMessage: 'chore: release v%VERSION%',
-        pushTo: 'upstream'
+        pushTo: 'upstream',
+        commitFiles: [
+          'package.json',
+          'CHANGELOG.md'
+        ]
       }
     },
     eslint: {
