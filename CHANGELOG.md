@@ -1,3 +1,27 @@
+<a name"0.4.0"></a>
+## 0.4.0 (2015-06-09)
+
+
+#### Bug Fixes
+
+* Drop karma from peerDependencies ([eebcc989](https://github.com/karma-runner/karma-coverage/commit/eebcc989))
+* do not dispose collectors before they are written ([9816cd14](https://github.com/karma-runner/karma-coverage/commit/9816cd14))
+* reporter allow using a externally provided source cachere for reporters change ` ([781c126f](https://github.com/karma-runner/karma-coverage/commit/781c126f))
+* watermarks are not passed to reporters ([a9044055](https://github.com/karma-runner/karma-coverage/commit/a9044055), closes [#143](https://github.com/karma-runner/karma-coverage/issues/143), [#144](https://github.com/karma-runner/karma-coverage/issues/144))
+* when using browserify dont create source code caching ([50030df1](https://github.com/karma-runner/karma-coverage/commit/50030df1))
+
+
+#### Breaking Changes
+
+* 
+Karma is no longer a `peerDependency` so it needs to be installed
+manually.
+
+Ref https://github.com/karma-runner/integration-tests/issues/5
+
+ ([eebcc989](https://github.com/karma-runner/karma-coverage/commit/eebcc989))
+
+
 <a name"0.3.1"></a>
 ### 0.3.1 (2015-06-09)
 
