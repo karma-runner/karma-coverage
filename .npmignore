@@ -1,5 +1,5 @@
 .*
 test
-
+examples/coffee/coverage
 Gruntfile.coffee
 CONTRIBUTING.md
