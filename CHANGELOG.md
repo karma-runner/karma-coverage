@@ -1,3 +1,12 @@
+<a name"0.4.2"></a>
+### 0.4.2 (2015-06-12)
+
+
+#### Bug Fixes
+
+* **preprocessor:** Use `_.contains` instead of `_.includes` to avoid braking with `lodash@2` ([411beb1f](https://github.com/karma-runner/karma-coverage/commit/411beb1f))
+
+
 <a name"0.4.1"></a>
 ### 0.4.1 (2015-06-09)
 
