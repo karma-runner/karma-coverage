@@ -90,6 +90,25 @@ module.exports = function(config) {
 });
 ```
 
+### FAQ
+
+#### Don't minify instrumenter output
+
+When using the istanbul instrumenter (default), you can disable code compaction by adding the following to your configuration.
+
+```javascript
+// karma.conf.js
+module.exports = function(config) {
+  config.set({
+    coverageReporter: {
+      instrumenterOptions: {
+        istanbul: { noCompact: true }
+      }
+    }
+  });
+};
+```
+
 ----
 
 For more information on Karma see the [homepage].
