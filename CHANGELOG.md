@@ -1,3 +1,13 @@
+<a name="0.5.0"></a>
+# 0.5.0 (2015-08-06)
+
+
+### Bug Fixes
+
+* **preprocessor:** use absolute paths ([27e0b09](https://github.com/karma-runner/karma-coverage/commit/27e0b09))
+
+
+
 <a name"0.4.2"></a>
 ### 0.4.2 (2015-06-12)
 
