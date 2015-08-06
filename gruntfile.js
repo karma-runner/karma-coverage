@@ -36,8 +36,7 @@ module.exports = function (grunt) {
             token: process.env.GH_TOKEN
           },
           changelogOpts: {
-            preset: 'angular',
-            releaseCount: 0
+            preset: 'angular'
           }
         }
       }
