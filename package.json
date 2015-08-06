@@ -52,6 +52,7 @@
   },
   "contributors": [
     "Aymeric Beaumet <aymeric@beaumet.me>",
+    "dignifiedquire <dignifiedquire@gmail.com>",
     "Friedel Ziegelmayer <dignifiedquire@gmail.com>",
     "Tim Kang <timkang@ucla.edu>",
     "Maksim Ryzhikov <rv.maksim@gmail.com>",
@@ -60,9 +61,10 @@
     "Douglas Duteil <douglasduteil@gmail.com>",
     "Matt Winchester <m_winche@yahoo.com>",
     "Wei Kin Huang <weikin.huang04@gmail.com>",
-    "Julie <ju.ralph@gmail.com>",
+    "Joshua Appelman <jappelman@xebia.com>",
+    "Kyle Welsby <kyle@mekyle.com>",
     "Maciej Rzepiński <maciej.rzepinski@gmail.com>",
-    "Joseph Connolly <joec@avinetworks.com>",
+    "James Talmage <james@talmage.io>",
     "Mark Ethan Trostler <mark@zzo.com>",
     "Chris Gladd <chris.m.gladd@gmail.com>",
     "Michael Stramel <m.stramel89@gmail.com>",
@@ -82,7 +84,7 @@
     "piecyk <piecyk@gmail.com>",
     "Yusuke Suzuki <utatane.tea@gmail.com>",
     "aprooks <alexander.prooks@gmail.com>",
-    "Joshua Appelman <jappelman@xebia.com>",
-    "Kyle Welsby <kyle@mekyle.com>"
+    "Joseph Connolly <joec@avinetworks.com>",
+    "Julie <ju.ralph@gmail.com>"
   ]
 }
