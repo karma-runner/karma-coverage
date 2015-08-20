@@ -54,6 +54,9 @@ module.exports = function (grunt) {
     karma: {
       coffee: {
         configFile: 'examples/coffee/karma.conf.coffee'
+      },
+      coffeeRequireJS: {
+        configFile: 'examples/coffee-requirejs/karma.conf.coffee'
       }
     },
     eslint: {

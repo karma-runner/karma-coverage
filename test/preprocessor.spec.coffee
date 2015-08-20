@@ -158,3 +158,29 @@ describe 'preprocessor', ->
     process ORIGINAL_CODE, file, (preprocessedCode) ->
       expect(coverageMap.get()['./file.js']).to.not.exist
       done()
+
+  it 'should change extension of CoffeeScript files when given `useJSExtensionForCoffeeScript`', (done) ->
+
+    ibrikInstrumenter  = ->
+    ibrikInstrumenter::instrument = (_a, _b, callback) ->
+      callback()
+      return
+
+    process = createPreprocessor mockLogger, helper, '/base/path', ['coverage', 'progress'],
+      instrumenters:
+        ibrik :
+          Instrumenter : ibrikInstrumenter
+      instrumenter:
+        '**/*.coffee': 'ibrik'
+      useJSExtensionForCoffeeScript: true
+
+    file = new File '/base/path/file.coffee'
+
+    process ORIGINAL_COFFEE_CODE, file, (preprocessedCode) ->
+      sandbox =
+        a: true
+        something: ->
+
+      vm.runInNewContext preprocessedCode, sandbox
+      expect(file.path).to.equal '/base/path/file.js'
+      done()

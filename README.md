@@ -54,7 +54,11 @@ module.exports = function(config) {
 ### CoffeeScript
 
 For an example on how to use with [CoffeeScript](http://coffeescript.org/)
-see [examples/coffee](examples/coffee).
+see [examples/coffee](examples/coffee). For an example of how to use with
+CoffeeScript and the RequireJS module loader, see
+[examples/coffee-requirejs](examples/coffee-requirejs) (and also see
+the `useJSExtensionForCoffeeScript` option in
+[docs/configuration.md](docs/configuration.md)).
 
 ### Advanced, multiple reporters
 
