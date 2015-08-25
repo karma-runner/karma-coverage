@@ -43,11 +43,17 @@ module.exports = function(config) {
       'src/**/*.js': ['coverage']
     },
 
+    // add karma-coverage to list of karma plugins
+    plugins: [
+      "karma-coverage"
+    ],
+
     // optionally, configure the reporter
     coverageReporter: {
       type : 'html',
       dir : 'coverage/'
     }
+
   });
 };
 ```
