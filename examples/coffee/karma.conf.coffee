@@ -26,7 +26,7 @@ module.exports = (config) ->
       'test.coffee': 'coffee'
 
     coverageReporter:
-      type: 'text-summary'
+      type: 'html'
       instrumenters:
         ibrik : require('ibrik')
       instrumenter:
