@@ -1,8 +1,8 @@
 vm = require 'vm'
 util = require 'util'
+path = require 'path'
 
 helper = {_: require 'lodash'}
-
 coverageMap = require '../lib/coverage-map'
 
 describe 'preprocessor', ->
@@ -58,7 +58,7 @@ describe 'preprocessor', ->
         something: ->
 
       vm.runInNewContext preprocessedCode, sandbox
-      expect(sandbox.__coverage__).to.have.ownProperty '/base/path/file.js'
+      expect(sandbox.__coverage__).to.have.ownProperty path.resolve('/base/path/file.js')
       done()
 
   it 'should preprocess the fake code', (done) ->
@@ -118,7 +118,7 @@ describe 'preprocessor', ->
 
       vm.runInNewContext preprocessedCode, sandbox
       expect(file.path).to.equal '/base/path/file.coffee'
-      expect(sandbox.__coverage__).to.have.ownProperty '/base/path/file.coffee'
+      expect(sandbox.__coverage__).to.have.ownProperty path.resolve('/base/path/file.coffee')
       done()
 
   it 'should fail if invalid instrumenter provided', (done) ->
@@ -136,7 +136,7 @@ describe 'preprocessor', ->
     coverageMap.reset()
 
     process ORIGINAL_CODE, file, (preprocessedCode) ->
-      expect(coverageMap.get()['/base/path/file.js']).to.exist
+      expect(coverageMap.get()[path.resolve('/base/path/file.js')]).to.exist
       done()
 
   it 'should not add coverageMap when not including all sources', (done) ->
