@@ -51,8 +51,8 @@
     "sinon-chai": "^2.8.0"
   },
   "contributors": [
-    "Aymeric Beaumet <aymeric@beaumet.me>",
     "dignifiedquire <dignifiedquire@gmail.com>",
+    "Aymeric Beaumet <aymeric@beaumet.me>",
     "Friedel Ziegelmayer <dignifiedquire@gmail.com>",
     "Tim Kang <timkang@ucla.edu>",
     "Maksim Ryzhikov <rv.maksim@gmail.com>",
@@ -79,6 +79,7 @@
     "Dmitry Petrov <dpetroff@gmail.com>",
     "Timo Tijhof <krinklemail@gmail.com>",
     "Tom Kirkpatrick <tom@systemseed.com>",
+    "Tyler Waters <tyler.waters@gmail.com>",
     "Vincent Lemeunier <vincent.lemeunier+git@gmail.com>",
     "Clayton Watts <cletusw@gmail.com>",
     "piecyk <piecyk@gmail.com>",
