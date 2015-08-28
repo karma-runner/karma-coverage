@@ -13,6 +13,7 @@ describe 'reporter', ->
   Collection = require '../node_modules/karma/lib/browser_collection'
   require('../node_modules/karma/lib/logger').setup 'INFO', false, []
 
+  resolve = (v...) -> helper.normalizeWinPath(path.resolve(v...))
   nodeMocks = require 'mocks'
   loadFile = nodeMocks.loadFile
   m = null
@@ -138,8 +139,8 @@ describe 'reporter', ->
       reporter.onRunComplete browsers
       expect(mockMkdir).to.have.been.calledTwice
       dir = rootConfig.coverageReporter.dir
-      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve('/base', dir, fakeChrome.name)
-      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve('/base', dir, fakeOpera.name)
+      expect(mockMkdir.getCall(0).args[0]).to.deep.equal resolve('/base', dir, fakeChrome.name)
+      expect(mockMkdir.getCall(1).args[0]).to.deep.equal resolve('/base', dir, fakeOpera.name)
       mockMkdir.getCall(0).args[1]()
       expect(mockReportCreate).to.have.been.called
       expect(mockWriteReport).to.have.been.called
@@ -157,8 +158,8 @@ describe 'reporter', ->
       expect(mockMkdir).to.have.been.calledTwice
       dir = customConfig.coverageReporter.dir
       subdir = customConfig.coverageReporter.subdir
-      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve('/base', dir, subdir)
-      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve('/base', dir, subdir)
+      expect(mockMkdir.getCall(0).args[0]).to.deep.equal resolve('/base', dir, subdir)
+      expect(mockMkdir.getCall(1).args[0]).to.deep.equal resolve('/base', dir, subdir)
       mockMkdir.getCall(0).args[1]()
       expect(mockReportCreate).to.have.been.called
       expect(mockWriteReport).to.have.been.called
@@ -175,8 +176,8 @@ describe 'reporter', ->
       reporter.onRunComplete browsers
       expect(mockMkdir).to.have.been.calledTwice
       dir = customConfig.coverageReporter.dir
-      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve('/base', dir, 'chrome')
-      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve('/base', dir, 'opera')
+      expect(mockMkdir.getCall(0).args[0]).to.deep.equal resolve('/base', dir, 'chrome')
+      expect(mockMkdir.getCall(1).args[0]).to.deep.equal resolve('/base', dir, 'opera')
       mockMkdir.getCall(0).args[1]()
       expect(mockReportCreate).to.have.been.called
       expect(mockWriteReport).to.have.been.called
@@ -203,10 +204,10 @@ describe 'reporter', ->
 
       reporter.onRunComplete browsers
       expect(mockMkdir.callCount).to.equal 4
-      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve('/base', 'reporter1', 'chrome')
-      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve('/base', 'reporter1', 'opera')
-      expect(mockMkdir.getCall(2).args[0]).to.deep.equal path.resolve('/base', 'reporter2', 'CHROME')
-      expect(mockMkdir.getCall(3).args[0]).to.deep.equal path.resolve('/base', 'reporter2', 'OPERA')
+      expect(mockMkdir.getCall(0).args[0]).to.deep.equal resolve('/base', 'reporter1', 'chrome')
+      expect(mockMkdir.getCall(1).args[0]).to.deep.equal resolve('/base', 'reporter1', 'opera')
+      expect(mockMkdir.getCall(2).args[0]).to.deep.equal resolve('/base', 'reporter2', 'CHROME')
+      expect(mockMkdir.getCall(3).args[0]).to.deep.equal resolve('/base', 'reporter2', 'OPERA')
       mockMkdir.getCall(0).args[1]()
       expect(mockReportCreate).to.have.been.called
       expect(mockWriteReport).to.have.been.called
@@ -231,10 +232,10 @@ describe 'reporter', ->
 
       reporter.onRunComplete browsers
       expect(mockMkdir.callCount).to.equal 4
-      expect(mockMkdir.getCall(0).args[0]).to.deep.equal path.resolve('/base', 'reporter1', 'defaultsubdir')
-      expect(mockMkdir.getCall(1).args[0]).to.deep.equal path.resolve('/base', 'reporter1', 'defaultsubdir')
-      expect(mockMkdir.getCall(2).args[0]).to.deep.equal path.resolve('/base', 'defaultdir', 'CHROME')
-      expect(mockMkdir.getCall(3).args[0]).to.deep.equal path.resolve('/base', 'defaultdir', 'OPERA')
+      expect(mockMkdir.getCall(0).args[0]).to.deep.equal resolve('/base', 'reporter1', 'defaultsubdir')
+      expect(mockMkdir.getCall(1).args[0]).to.deep.equal resolve('/base', 'reporter1', 'defaultsubdir')
+      expect(mockMkdir.getCall(2).args[0]).to.deep.equal resolve('/base', 'defaultdir', 'CHROME')
+      expect(mockMkdir.getCall(3).args[0]).to.deep.equal resolve('/base', 'defaultdir', 'OPERA')
       mockMkdir.getCall(0).args[1]()
       expect(mockReportCreate).to.have.been.called
       expect(mockWriteReport).to.have.been.called
