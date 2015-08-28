@@ -1,3 +1,14 @@
+<a name="0.5.1"></a>
+## 0.5.1 (2015-08-28)
+
+
+### Bug Fixes
+
+* **preprocessor:** Change paths in windows to use backslash ([b0eecbe](https://github.com/karma-runner/karma-coverage/commit/b0eecbe)), closes [#178](https://github.com/karma-runner/karma-coverage/issues/178)
+* **preprocessor:** Resolve all paths properly ([098182f](https://github.com/karma-runner/karma-coverage/commit/098182f)), closes [#65](https://github.com/karma-runner/karma-coverage/issues/65)
+
+
+
 <a name="0.5.0"></a>
 # 0.5.0 (2015-08-06)
 
