@@ -1,3 +1,13 @@
+<a name="0.5.2"></a>
+## 0.5.2 (2015-09-08)
+
+
+### Bug Fixes
+
+* **preprocessor:** Reset coverageObjRegex before each use ([ef3f45c](https://github.com/karma-runner/karma-coverage/commit/ef3f45c))
+
+
+
 <a name="0.5.1"></a>
 ## 0.5.1 (2015-08-28)
 
