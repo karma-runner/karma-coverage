@@ -1,3 +1,13 @@
+<a name="0.5.3"></a>
+## 0.5.3 (2015-10-20)
+
+
+### Bug Fixes
+
+* Update (dev)dependencies, include missing peer dependency and fix linter errors ([bb73158](https://github.com/karma-runner/karma-coverage/commit/bb73158))
+
+
+
 <a name="0.5.2"></a>
 ## 0.5.2 (2015-09-08)
 
