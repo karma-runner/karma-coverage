@@ -220,3 +220,26 @@ coverageReporter: {
   }
 }
 ```
+
+### `useJSExtensionForCoffeeScript`
+
+**Type:** boolean
+
+**Description:** If set to `true`, then CoffeeScript files instrumented
+with [Ibrik](https://github.com/Constellation/ibrik) will use the `.js`
+extension for the transpiled source (without this option, the JavaScript
+files will keep the original `.coffee` extension). This option is required
+if you use a module loader such as [RequireJS](http://requirejs.org/) that
+expects files to use a `.js` extension.
+
+Example of using RequireJS with CoffeeScript:
+
+```coffeescript
+coverageReporter:
+  useJSExtensionForCoffeeScript: true
+  instrumenters:
+    ibrik : require('ibrik')
+  instrumenter:
+    '**/*.coffee': 'ibrik'
+# ...
+```
