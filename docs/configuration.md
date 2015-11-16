@@ -195,7 +195,7 @@ CoffeeScript files) with:
 
 ```javascript
 coverageReporter: {
-  instrumenters: { ibrik : require('ibrik') }
+  instrumenters: { ibrik : require('ibrik') },
   instrumenter: {
     '**/*.coffee': 'ibrik'
   },
