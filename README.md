@@ -91,7 +91,7 @@ module.exports = function(config) {
       ]
     }
   });
-});
+};
 ```
 
 ### FAQ
