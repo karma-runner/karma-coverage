@@ -53,7 +53,7 @@ coverageReporter: {
 coverageReporter: {
   dir: 'coverage',
   subdir: function(browser) {
-    // normalization process to keep a consistent browser name accross different
+    // normalization process to keep a consistent browser name across different
     // OS
     return browser.toLowerCase().split(/[ /-]/)[0];
   }
