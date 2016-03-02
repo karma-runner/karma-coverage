@@ -108,7 +108,7 @@ describe 'reporter', ->
         basePath: '/base'
         coverageReporter: dir: 'path/to/coverage/'
       emitter = new events.EventEmitter
-      reporter = new m.CoverageReporter rootConfig, mockHelper, mockLogger
+      reporter = new m.CoverageReporter rootConfig, mockHelper, mockLogger, emitter
       browsers = new Collection emitter
       # fake user agent only for testing
       # cf. helper.browserFullNameToShort
@@ -144,6 +144,10 @@ describe 'reporter', ->
       mockMkdir.getCall(0).args[1]()
       expect(mockReportCreate).to.have.been.called
       expect(mockWriteReport).to.have.been.called
+      createArgs = mockReportCreate.getCall(0).args
+      expect(createArgs[0]).to.be.equal 'html'
+      expect(createArgs[1].browser).to.be.equal fakeChrome
+      expect(createArgs[1].emitter).to.be.equal emitter
 
     it 'should support a string for the subdir option', ->
       customConfig = _.merge {}, rootConfig,
