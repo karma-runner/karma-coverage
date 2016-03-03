@@ -1,3 +1,15 @@
+<a name="0.5.4"></a>
+## [0.5.4](https://github.com/karma-runner/karma-coverage/compare/v0.5.3...v0.5.4) (2016-03-03)
+
+
+### Bug Fixes
+
+* **preprocessor:** Call done with error message instead of populating instrumentedCode ([c56e4de](https://github.com/karma-runner/karma-coverage/commit/c56e4de))
+* **preprocessor:** Support CoffeeScript when using  RequireJS ([e941e0c](https://github.com/karma-runner/karma-coverage/commit/e941e0c)), closes [#177](https://github.com/karma-runner/karma-coverage/issues/177)
+* **preprocessor:** Use _.includes instead of _.contains ([3c769d5](https://github.com/karma-runner/karma-coverage/commit/3c769d5)), closes [#212](https://github.com/karma-runner/karma-coverage/issues/212)
+
+
+
 <a name="0.5.3"></a>
 ## 0.5.3 (2015-10-20)
 
