@@ -15,6 +15,7 @@
   * `cobertura` (xml format supported by Jenkins)
   * `teamcity` (code coverage System Messages for TeamCity)
   * `json` (json format supported by [`grunt-istanbul-coverage`](https://github.com/daniellmb/grunt-istanbul-coverage))
+  * `in-memory` (supported since v0.5.4)
 
 ### `dir`
 
@@ -243,3 +244,27 @@ coverageReporter:
     '**/*.coffee': 'ibrik'
 # ...
 ```
+
+### `reporter[type='in-memory']`
+
+This is a different kind of reporter. Instead of writing a report physicaly 
+to disk, it raises an event `coverage_complete`. This event can only be caught 
+when using karma via the [public api](http://karma-runner.github.io/0.13/dev/public-api.html)
+
+```javascript
+var Server = require('karma').Server
+var server = new Server({files: [/*...*/], port: 9876, coverageReporter: { type: 'in-memory' }, preprocessors: { '**/*.js': 'coverage' }, reporters: ['coverage'] }, function(exitCode) {
+  console.log('Karma has exited with ' + exitCode)
+  process.exit(exitCode)
+})
+
+server.on('coverage_complete', function (browser, coverageReport) {
+  console.log('Covrage report: ', coverageReport)
+})
+
+server.start();
+
+karma.runner.run({port: 9876});
+```
+
+The coverage report will be a merged result in json format.
