@@ -1,3 +1,13 @@
+<a name="0.5.5"></a>
+## [0.5.5](https://github.com/karma-runner/karma-coverage/compare/v0.5.4...v0.5.5) (2016-03-07)
+
+
+### Bug Fixes
+
+* **in-memory-reporter:** Fix bug in new InMemoryReport, now using null-checks ([051cffd](https://github.com/karma-runner/karma-coverage/commit/051cffd))
+
+
+
 <a name="0.5.4"></a>
 ## [0.5.4](https://github.com/karma-runner/karma-coverage/compare/v0.5.3...v0.5.4) (2016-03-03)
 
