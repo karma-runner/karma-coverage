@@ -1,4 +1,5 @@
 InMemoryReport = require '../lib/in-memory-report'
+istanbul = require 'istanbul';
 
 describe 'InMemoryReport', ->  
 
@@ -17,3 +18,9 @@ describe 'InMemoryReport', ->
     
   it 'should be of type "in-memory"', ->
     expect(InMemoryReport.TYPE).to.be.equal('in-memory')
+
+  it 'should not fail when created without arguments', ->
+    expect(new InMemoryReport()).to.be.ok
+    
+  it 'should inherit from Report', ->
+    expect(new InMemoryReport()).to.be.an.instanceof(istanbul.Report)
