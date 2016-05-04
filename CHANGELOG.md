@@ -1,3 +1,8 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/karma-runner/karma-coverage/compare/v0.5.5...v1.0.0) (2016-05-04)
+
+
+
 <a name="0.5.5"></a>
 ## [0.5.5](https://github.com/karma-runner/karma-coverage/compare/v0.5.4...v0.5.5) (2016-03-07)
 
