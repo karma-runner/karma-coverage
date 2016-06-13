@@ -16,6 +16,7 @@
   * `teamcity` (code coverage System Messages for TeamCity)
   * `json` (json format supported by [`grunt-istanbul-coverage`](https://github.com/daniellmb/grunt-istanbul-coverage))
   * `in-memory` (supported since v0.5.4)
+  * `none` (Does nothing. Use to specify that no reporting is needed)
 
 ### `dir`
 
