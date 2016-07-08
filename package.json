@@ -19,8 +19,9 @@
   ],
   "author": "SATO taichi <ryushi@gmail.com>",
   "dependencies": {
-    "istanbul": "^0.4.0",
     "dateformat": "^1.0.6",
+    "istanbul": "^0.4.0",
+    "lodash": "^3.8.0",
     "minimatch": "^3.0.0",
     "source-map": "^0.5.1"
   },
@@ -47,7 +48,6 @@
     "karma-mocha": "1.x || ^0.2.0",
     "karma-requirejs": "1.x || ^0.2.2",
     "load-grunt-tasks": "^3.2.0",
-    "lodash": "^4.5.0",
     "mocha": "^2.2.5",
     "mocks": "0.0.15",
     "requirejs": "^2.1.20",
