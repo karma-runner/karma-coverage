@@ -1,3 +1,13 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/karma-runner/karma-coverage/compare/v1.1.0...v1.1.1) (2016-07-23)
+
+
+### Bug Fixes
+
+* remove usage of the deprecated helper._ ([dacf9e9](https://github.com/karma-runner/karma-coverage/commit/dacf9e9))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/karma-runner/karma-coverage/compare/v0.5.5...v1.1.0) (2016-07-07)
 
