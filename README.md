@@ -94,6 +94,46 @@ module.exports = function(config) {
 };
 ```
 
+### Advanced, check coverage
+
+Istanbul provides a `check-coverage` script you can use to set coverage thresholds.
+Rather than having a separate script, you can specify your thresholds in your
+`karma.conf.js`.
+
+```javascript
+// karma.conf.js
+module.exports = function(config) {
+  config.set({
+    files: ['src/**/*.js','test/**/*.js'],
+    reporters: ['progress', 'coverage'],
+    preprocessors: {'src/**/*.js': ['coverage']},
+    coverageReporter: {
+      check: {
+        // the average across all instrumented files in the project
+        global: {
+          statements: 68,
+          branches: 59,
+          functions: 76,
+          lines: 52
+        },
+        // each file must individually be covered by this threshold at least
+        each: {
+          statements: 30,
+          branches: 30,
+          functions: 30,
+          lines: 30
+        }
+      },
+      reporters: [
+        {type: 'lcov', dir: 'coverage/', subdir: '.'},
+        {type: 'json', dir: 'coverage/', subdir: '.'},
+        {type: 'text-summary'},
+      ],
+    }
+  });
+};
+```
+
 ### FAQ
 
 #### Don't minify instrumenter output
