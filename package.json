@@ -19,10 +19,8 @@
   ],
   "author": "SATO taichi <ryushi@gmail.com>",
   "dependencies": {
-    "dateformat": "^1.0.6",
-    "istanbul": "^0.4.0",
+    "istanbul-api": "^1.1.0-alpha.1",
     "lodash": "^3.8.0",
-    "minimatch": "^3.0.0",
     "source-map": "^0.5.1"
   },
   "license": "MIT",
