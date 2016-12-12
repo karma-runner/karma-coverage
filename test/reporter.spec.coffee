@@ -424,6 +424,66 @@ describe 'reporter', ->
 
       expect(results.exitCode).to.not.equal 0
 
+    it 'should log errors on max coverage breach and fail the build', ->
+      customConfig = _.merge {}, rootConfig,
+        coverageReporter:
+          check:
+            each:
+              statements: [17, 19]
+
+      mockGetFinalCoverage.returns
+        './foo/bar.js': {}
+        './foo/baz.js': {}
+
+      spy1 = sinon.spy()
+
+      customLogger = create: (name) ->
+        debug: -> null
+        info: -> null
+        warn: -> null
+        error: spy1
+
+      results = exitCode: 0
+
+      reporter = new m.CoverageReporter customConfig, mockHelper, customLogger
+      reporter.onRunStart()
+      browsers.forEach (b) -> reporter.onBrowserStart b
+      reporter.onRunComplete browsers, results
+
+      expect(spy1).to.have.been.called
+
+      expect(results.exitCode).to.not.equal 0
+
+    it 'should successfully pass if within min/max coverage', ->
+      customConfig = _.merge {}, rootConfig,
+        coverageReporter:
+          check:
+            each:
+              statements: [17, 21]
+
+      mockGetFinalCoverage.returns
+        './foo/bar.js': {}
+        './foo/baz.js': {}
+
+      spy1 = sinon.spy()
+
+      customLogger = create: (name) ->
+        debug: -> null
+        info: -> null
+        warn: -> null
+        error: spy1
+
+      results = exitCode: 0
+
+      reporter = new m.CoverageReporter customConfig, mockHelper, customLogger
+      reporter.onRunStart()
+      browsers.forEach (b) -> reporter.onBrowserStart b
+      reporter.onRunComplete browsers, results
+
+      expect(spy1).not.to.have.been.called
+
+      expect(results.exitCode).to.equal 0
+
     it 'should not log errors on sufficient coverage and not fail the build', ->
       customConfig = _.merge {}, rootConfig,
         coverageReporter:

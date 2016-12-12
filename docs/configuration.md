@@ -82,9 +82,14 @@ coverageReporter: {
 
 **Type:** Object
 
-**Description:** This will be used to configure minimum threshold enforcement for coverage results. If the thresholds are not met, karma will return failure. Thresholds, when specified as a positive number are taken to be the minimum percentage required. When a threshold is specified as a negative number it represents the maximum number of uncovered entities allowed.
+**Description:** This will be used to configure minimum/maximum threshold enforcement for coverage results. If the thresholds are not met, karma will return failure. Thresholds, when specified as a positive number are taken to be the minimum percentage required.
+When a threshold is specified as a negative number it represents the maximum number of uncovered entities allowed.
+When a threshold is specified as an array it represents minimum and maximum coverage.
 
-For example, `statements: 90` implies minimum statement coverage is 90%. `statements: -10` implies that no more than 10 uncovered statements are allowed.
+For example,
+`statements: 90` implies minimum statement coverage is 90%.
+`statements: -10` implies that no more than 10 uncovered statements are allowed.
+`statements: [90, 95]` implies statement coverage must be between 90 and 95%
 
 `global` applies to all files together and `each` on a per-file basis. A list of files or patterns can be excluded from enforcement via the `exclude` property. On a per-file or pattern basis, per-file thresholds can be overridden via the `overrides` property.
 
