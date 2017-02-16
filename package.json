@@ -31,7 +31,7 @@
     "eslint": "^2.2.0",
     "eslint-config-standard": "^5.1.0",
     "eslint-plugin-promise": "^1.1.0",
-    "eslint-plugin-react": "^4.1.0",
+    "eslint-plugin-react": "^6.10.0",
     "eslint-plugin-standard": "^1.1.0",
     "grunt": "^0.4.5",
     "grunt-bump": "^0.7.0",
