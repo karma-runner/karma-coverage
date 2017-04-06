@@ -29,7 +29,7 @@
   "devDependencies": {
     "chai": "^3.3.0",
     "eslint": "^2.2.0",
-    "eslint-config-standard": "^5.1.0",
+    "eslint-config-standard": "^10.2.0",
     "eslint-plugin-promise": "^1.1.0",
     "eslint-plugin-react": "^4.1.0",
     "eslint-plugin-standard": "^1.1.0",
