@@ -5,7 +5,7 @@
 
 [![Build Status](https://img.shields.io/travis/karma-runner/karma-coverage/master.svg?style=flat-square)](https://travis-ci.org/karma-runner/karma-coverage) [![Dependency Status](https://img.shields.io/david/karma-runner/karma-coverage.svg?style=flat-square)](https://david-dm.org/karma-runner/karma-coverage) [![devDependency Status](https://img.shields.io/david/dev/karma-runner/karma-coverage.svg?style=flat-square)](https://david-dm.org/karma-runner/karma-coverage#info=devDependencies)
 
-> Generate code coverage using [Istanbul].
+> Generate code coverage using [Istanbul](https://github.com/gotwarlost/istanbul).
 
 ## Installation
 
