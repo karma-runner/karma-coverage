@@ -88,6 +88,8 @@ module.exports = function(config) {
         { type: 'teamcity', subdir: '.', file: 'teamcity.txt' },
         { type: 'text', subdir: '.', file: 'text.txt' },
         { type: 'text-summary', subdir: '.', file: 'text-summary.txt' },
+        { type: 'json', subdir: '.', file: 'json.json' },
+        { type: 'json-summary', subdir: '.', file: 'json-summary.json' },
       ]
     }
   });
