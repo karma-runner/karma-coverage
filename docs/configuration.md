@@ -86,7 +86,7 @@ coverageReporter: {
 
 For example, `statements: 90` implies minimum statement coverage is 90%. `statements: -10` implies that no more than 10 uncovered statements are allowed.
 
-`global` applies to all files together and `each` on a per-file basis. A list of files or patterns can be excluded from enforcement via the `exclude` property. On a per-file or pattern basis, per-file thresholds can be overridden via the `overrides` property.
+`global` applies to all files together and `each` on a per-file basis. A list of files or patterns can be excluded from enforcement via the `excludes` property. On a per-file or pattern basis, per-file thresholds can be overridden via the `overrides` property.
 
 ```javascript
 coverageReporter: {
