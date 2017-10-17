@@ -21,7 +21,7 @@
   "dependencies": {
     "dateformat": "^1.0.6",
     "istanbul": "^0.4.0",
-    "lodash": "^3.8.0",
+    "lodash": "^4.17.0",
     "minimatch": "^3.0.0",
     "source-map": "^0.5.1"
   },
