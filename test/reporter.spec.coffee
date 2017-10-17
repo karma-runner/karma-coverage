@@ -453,3 +453,36 @@ describe 'reporter', ->
       expect(spy1).to.not.have.been.called
 
       expect(results.exitCode).to.equal 0
+
+    it 'should add two collectors when aggregating by browser id (default) when using two browsers', ->
+      customConfig = _.merge {}, rootConfig,
+        coverageReporter:
+          dir: 'defaultdir'
+
+      reporter = new m.CoverageReporter customConfig, mockHelper, mockLogger
+      reporter.onRunStart()
+      browsers = new Collection emitter
+      browsers.add new Browser 'aaa', 'Windows NT 6.1 Chrome/16.0.912.75', browsers, emitter
+      browsers.add new Browser 'bbb', 'Windows NT 6.1 Chrome/16.0.912.75', browsers, emitter
+
+      browsers.forEach (b) -> reporter.onBrowserStart b
+      reporter.onRunComplete browsers
+
+      expect(mockMkdir.callCount).to.equal 2
+
+    it 'should only add one collector when aggregating by browser name despite two ids', ->
+      customConfig = _.merge {}, rootConfig,
+        coverageReporter:
+          browserId: 'name'
+          dir: 'defaultdir'
+
+      reporter = new m.CoverageReporter customConfig, mockHelper, mockLogger
+      reporter.onRunStart()
+      browsers = new Collection emitter
+      browsers.add new Browser 'aaa', 'Windows NT 6.1 Chrome/16.0.912.75', browsers, emitter
+      browsers.add new Browser 'bbb', 'Windows NT 6.1 Chrome/16.0.912.75', browsers, emitter
+
+      browsers.forEach (b) -> reporter.onBrowserStart b
+      reporter.onRunComplete browsers
+
+      expect(mockMkdir.callCount).to.equal 1
