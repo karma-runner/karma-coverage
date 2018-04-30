@@ -33,7 +33,7 @@
 **Description**: This will be used in complement of the `coverageReporter.dir`
 option to generate the full output directory path. By default, the output
 directory is set to `./config.dir/BROWSER_NAME/`, this option allows you to
-custom the second part. You can either pass a `string` or a `function` which will be
+customize the second part. You can either pass a `string` or a `function` which will be
 called with the browser name passed as the only argument.
 
 ```javascript
@@ -185,12 +185,11 @@ coverageReporter: {
 
 **Type:** Object
 
-**Description:** Karma-coverage can infers the instrumenter regarding of the file extension. It is possible to override this behavior and point out an
-instrumenter for the files matching a specific pattern.
-To do so, you need to declare an object under with the keys represents the
+**Description:** Karma-coverage can infer the instrumenter based on the file extension. It is possible to override this behavior and choose an instrumenter for files matching a specific pattern.
+To do so, you need to declare an object with keys representing the
 pattern to match, and the instrumenter to apply. The matching will be done
 using [minimatch](https://github.com/isaacs/minimatch).
-If two patterns match, the last one will take the precedence.
+If two patterns match, the last one will take precedence.
 
 For example you can use [Ibrik](https://github.com/Constellation/ibrik) (an
 [Istanbul](https://github.com/gotwarlost/istanbul) analog for
