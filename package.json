@@ -57,6 +57,9 @@
     "sinon": "^1.14.1",
     "sinon-chai": "^2.8.0"
   },
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "contributors": [
     "dignifiedquire <dignifiedquire@gmail.com>",
     "Friedel Ziegelmayer <dignifiedquire@gmail.com>",
