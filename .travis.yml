@@ -1,9 +1,7 @@
 language: node_js
 node_js:
-  - 4
-  - 5
-  - 7
   - 8
+  - 10
 
 # Make sure we have new NPM.
 before_install:
