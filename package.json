@@ -28,17 +28,19 @@
   "license": "MIT",
   "devDependencies": {
     "chai": "^3.3.0",
-    "eslint": "^2.2.0",
-    "eslint-config-standard": "^5.1.0",
-    "eslint-plugin-promise": "^1.1.0",
-    "eslint-plugin-react": "^4.1.0",
-    "eslint-plugin-standard": "^1.1.0",
+    "eslint": "^5.15.2",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-standard": "^4.0.0",
     "grunt": "^0.4.5",
     "grunt-bump": "^0.7.0",
     "grunt-cli": "^1.2.0",
     "grunt-conventional-changelog": "^6.1.0",
     "grunt-conventional-github-releaser": "^1.0.0",
-    "grunt-eslint": "^18.0.0",
+    "grunt-eslint": "^21.0.0",
     "grunt-karma": "1.x || ^0.12.0",
     "grunt-npm": "^0.0.2",
     "grunt-simple-mocha": "^0.4.0",
@@ -54,6 +56,9 @@
     "requirejs": "^2.1.20",
     "sinon": "^1.14.1",
     "sinon-chai": "^2.8.0"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   },
   "contributors": [
     "dignifiedquire <dignifiedquire@gmail.com>",
