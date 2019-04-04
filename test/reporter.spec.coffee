@@ -118,7 +118,7 @@ describe 'reporter', ->
       browsers.add fakeOpera
       reporter.onRunStart()
       browsers.forEach (b) -> reporter.onBrowserStart b
-      mockMkdir.reset()
+      mockMkdir.resetHistory()
 
     it 'has no pending file writings', ->
       done = sinon.spy()
@@ -269,7 +269,7 @@ describe 'reporter', ->
       run()
       expect(mockMkdir).to.have.been.calledTwice
 
-      mockMkdir.reset()
+      mockMkdir.resetHistory()
       rootConfig.coverageReporter.reporters = [{ type: 'text-summary', file: 'file' }]
       run()
       expect(mockMkdir).to.have.been.calledTwice
@@ -280,8 +280,8 @@ describe 'reporter', ->
           dir: 'defaultdir'
           includeAllSources: true
 
-      mockCoverageMap.get.reset()
-      mockAdd.reset()
+      mockCoverageMap.get.resetHistory()
+      mockAdd.resetHistory()
 
       reporter = new m.CoverageReporter customConfig, mockHelper, mockLogger
       reporter.onRunStart()
@@ -296,7 +296,7 @@ describe 'reporter', ->
           dir: 'defaultdir'
           includeAllSources: false
 
-      mockCoverageMap.get.reset()
+      mockCoverageMap.get.resetHistory()
 
       reporter = new m.CoverageReporter customConfig, mockHelper, mockLogger
       reporter.onRunStart()
@@ -309,7 +309,7 @@ describe 'reporter', ->
         coverageReporter:
           dir: 'defaultdir'
 
-      mockCoverageMap.get.reset()
+      mockCoverageMap.get.resetHistory()
 
       reporter = new m.CoverageReporter customConfig, mockHelper, mockLogger
       reporter.onRunStart()
@@ -384,9 +384,9 @@ describe 'reporter', ->
         { type: 'html' }
       ]
 
-      mockDispose.reset()
-      mockWriteReport.reset()
-      mockMkdir.reset()
+      mockDispose.resetHistory()
+      mockWriteReport.resetHistory()
+      mockMkdir.resetHistory()
 
       run()
 

@@ -9,8 +9,5 @@ global.sinon = sinon
 # chai plugins
 chai.use(require 'sinon-chai')
 
-beforeEach ->
-  global.sinon = sinon.sandbox.create()
-
 afterEach ->
   global.sinon.restore()
