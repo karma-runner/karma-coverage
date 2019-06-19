@@ -21,6 +21,11 @@
   "dependencies": {
     "dateformat": "^1.0.6",
     "istanbul": "^0.4.0",
+    "istanbul-lib-coverage": "^2.0.5",
+    "istanbul-lib-instrument": "^3.3.0",
+    "istanbul-lib-report": "^2.0.8",
+    "istanbul-lib-source-maps": "^3.0.6",
+    "istanbul-reports": "^2.2.4",
     "lodash": "^4.17.11",
     "minimatch": "^3.0.0",
     "source-map": "^0.5.1"
