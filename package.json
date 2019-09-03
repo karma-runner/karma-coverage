@@ -20,7 +20,6 @@
   "author": "SATO taichi <ryushi@gmail.com>",
   "dependencies": {
     "dateformat": "^1.0.6",
-    "istanbul": "^0.4.0",
     "istanbul-lib-coverage": "^2.0.5",
     "istanbul-lib-instrument": "^3.3.0",
     "istanbul-lib-report": "^2.0.8",
