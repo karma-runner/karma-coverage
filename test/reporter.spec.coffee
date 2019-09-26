@@ -57,7 +57,6 @@ describe 'reporter', ->
 
   mocks =
     fs: mockFs
-    dateformat: require 'dateformat'
 
   beforeEach ->
     mockCoverageSummary =
