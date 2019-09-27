@@ -3,18 +3,12 @@ node_js:
   - 8
   - 10
 
-# Make sure we have new NPM.
-before_install:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - sleep 3 # Give xvfb time to to start
-  - npm install -g npm
-  - npm config set loglevel warn
+services:
+  - xvfb
 
 before_script:
+  - export DISPLAY=:99.0
   - npm install -g grunt-cli
 
 script:
   - grunt
-
-dist: trusty # Impacts this script, eg xvfb
