@@ -7,7 +7,6 @@ services:
   - xvfb
 
 before_script:
-  - export DISPLAY=:99.0
   - npm install -g grunt-cli
 
 script:
