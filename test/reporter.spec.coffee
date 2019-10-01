@@ -2,7 +2,6 @@
 # lib/reporters/Coverage.js module
 #==============================================================================
 describe 'reporter', ->
-  _ = require 'lodash'
   events = require 'events'
   path = require 'path'
 
@@ -26,7 +25,6 @@ describe 'reporter', ->
 
   mkdirIfNotExistsStub = sinon.stub()
   mockHelper =
-    _: helper._
     isDefined: (v) -> helper.isDefined v
     merge: (v...) -> helper.merge v...
     mkdirIfNotExists: mkdirIfNotExistsStub
@@ -163,7 +161,7 @@ describe 'reporter', ->
       expect(createArgs[1].emitter).to.be.equal emitter
 
     it 'should support a string for the subdir option', ->
-      customConfig = _.merge {}, rootConfig,
+      customConfig = helper.merge {}, rootConfig,
         coverageReporter:
           subdir: 'test'
 
@@ -182,7 +180,7 @@ describe 'reporter', ->
       expect(mockPackageSummary.visit).to.have.been.called
 
     it 'should support a function for the subdir option', ->
-      customConfig = _.merge {}, rootConfig,
+      customConfig = helper.merge {}, rootConfig,
         coverageReporter:
           subdir: (browserName) -> browserName.toLowerCase().split(/[ /-]/)[0]
 
@@ -200,7 +198,7 @@ describe 'reporter', ->
       expect(mockPackageSummary.visit).to.have.been.called
 
     it 'should support a specific dir and subdir per reporter', ->
-      customConfig = _.merge {}, rootConfig,
+      customConfig = helper.merge {}, rootConfig,
         coverageReporter:
           dir: 'useless'
           subdir: 'useless'
@@ -230,7 +228,7 @@ describe 'reporter', ->
       expect(mockPackageSummary.visit).to.have.been.called
 
     it 'should fallback to the default dir/subdir if not provided', ->
-      customConfig = _.merge {}, rootConfig,
+      customConfig = helper.merge {}, rootConfig,
         coverageReporter:
           dir: 'defaultdir'
           subdir: 'defaultsubdir'
@@ -288,7 +286,7 @@ describe 'reporter', ->
       expect(mkdirIfNotExistsStub).to.have.been.calledTwice
 
     it 'should support including all sources', ->
-      customConfig = _.merge {}, rootConfig,
+      customConfig = helper.merge {}, rootConfig,
         coverageReporter:
           dir: 'defaultdir'
           includeAllSources: true
@@ -304,7 +302,7 @@ describe 'reporter', ->
       expect(createCoverageMapStub).to.have.been.calledWith globalCoverageMapGetStub.returnValues[0]
 
     it 'should not retrieve the coverageMap if we aren\'t including all sources', ->
-      customConfig = _.merge {}, rootConfig,
+      customConfig = helper.merge {}, rootConfig,
         coverageReporter:
           dir: 'defaultdir'
           includeAllSources: false
@@ -318,7 +316,7 @@ describe 'reporter', ->
       expect(globalCoverageMapGetStub).not.to.have.been.called
 
     it 'should default to not including all sources', ->
-      customConfig = _.merge {}, rootConfig,
+      customConfig = helper.merge {}, rootConfig,
         coverageReporter:
           dir: 'defaultdir'
 
@@ -337,7 +335,7 @@ describe 'reporter', ->
         functions: [50, 60]
         lines: [70, 80]
 
-      customConfig = _.merge {}, rootConfig,
+      customConfig = helper.merge {}, rootConfig,
         coverageReporter:
           reporters: [
             {
@@ -364,7 +362,7 @@ describe 'reporter', ->
         statements: [10, 20]
         lines: [70, 80]
 
-      customConfig = _.merge {}, rootConfig,
+      customConfig = helper.merge {}, rootConfig,
         coverageReporter:
           reporters: [
             {
@@ -390,7 +388,7 @@ describe 'reporter', ->
       expect(options.args[1].watermarks.lines).to.deep.equal(watermarks.lines)
 
     it 'should log errors on low coverage and fail the build', ->
-      customConfig = _.merge {}, rootConfig,
+      customConfig = helper.merge {}, rootConfig,
         coverageReporter:
           check:
             each:
@@ -423,7 +421,7 @@ describe 'reporter', ->
       expect(results.exitCode).to.not.equal 0
 
     it 'should not log errors on sufficient coverage and not fail the build', ->
-      customConfig = _.merge {}, rootConfig,
+      customConfig = helper.merge {}, rootConfig,
         coverageReporter:
           check:
             each:
