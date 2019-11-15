@@ -65,6 +65,8 @@ describe 'preprocessor', ->
     fakeInstanbulLikeInstrumenter::instrument = (_a, _b, callback) ->
       callback()
       return
+    fakeInstanbulLikeInstrumenter::lastSourceMap = ->
+      return
     process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'],
       instrumenters:
        fakeInstanbulLike :
@@ -89,7 +91,8 @@ describe 'preprocessor', ->
     fakeInstanbulLikeInstrumenter::instrument = (_a, _b, callback) ->
       callback()
       return
-
+    fakeInstanbulLikeInstrumenter::lastSourceMap = ->
+      return
     process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'],
       instrumenters:
         fakeInstanbulLike:
@@ -163,6 +166,8 @@ describe 'preprocessor', ->
     ibrikInstrumenter  = ->
     ibrikInstrumenter::instrument = (_a, _b, callback) ->
       callback()
+      return
+    ibrikInstrumenter::lastSourceMap = ->
       return
 
     process = createPreprocessor mockLogger, '/base/path', ['coverage', 'progress'],
