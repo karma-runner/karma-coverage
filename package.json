@@ -24,8 +24,7 @@
     "istanbul-lib-report": "^2.0.8",
     "istanbul-lib-source-maps": "^3.0.6",
     "istanbul-reports": "^2.2.4",
-    "minimatch": "^3.0.0",
-    "source-map": "^0.5.1"
+    "minimatch": "^3.0.0"
   },
   "license": "MIT",
   "devDependencies": {
