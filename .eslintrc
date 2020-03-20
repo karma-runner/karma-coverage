@@ -1,3 +1,11 @@
 {
-  "extends": "standard"
+  "extends": "standard",
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "globals": {
+    "expect": true,
+    "sinon": true
+  }
 }
