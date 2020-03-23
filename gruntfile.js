@@ -8,8 +8,8 @@ module.exports = function (grunt) {
       },
       unit: {
         src: [
-          'test/mocha-globals.coffee',
-          'test/*.spec.coffee'
+          'test/mocha-globals.js',
+          'test/*.spec.js'
         ]
       }
     },
