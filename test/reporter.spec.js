@@ -44,7 +44,6 @@ describe('reporter', () => {
   let createCoverageSummaryStub = null
   let createCoverageMapStub = null
   let createContextStub = null
-  let packageSummaryStub = null
   let getDefaultWatermarkStub = null
   let sourceMapStoreGetStub = null
   let globalCoverageMapGetStub = null
@@ -82,19 +81,14 @@ describe('reporter', () => {
       functions: [50, 80],
       lines: [50, 80]
     }
-    mockPackageSummary = {
-      visit: sinon.stub()
-    }
     createContextStub = sinon.stub(istanbulLibReport, 'createContext')
-    packageSummaryStub = sinon.stub(istanbulLibReport.summarizers, 'pkg')
-    packageSummaryStub.returns(mockPackageSummary)
     getDefaultWatermarkStub = sinon.stub(istanbulLibReport, 'getDefaultWatermarks')
     getDefaultWatermarkStub.returns(mockDefaultWatermarks)
 
     mockSourceMapStore = {
       transformCoverage: sinon.stub()
     }
-    mockSourceMapStore.transformCoverage.returns({ map: mockCoverageMap })
+    mockSourceMapStore.transformCoverage.resolves(mockCoverageMap)
     sourceMapStoreGetStub = sinon.stub(globalSourceMapStore, 'get')
     sourceMapStoreGetStub.returns(mockSourceMapStore)
 
@@ -103,7 +97,9 @@ describe('reporter', () => {
     globalCoverageMapGetStub.returns(mockGlobalCoverageMap)
     sinon.stub(globalCoverageMap, 'add')
 
+    mockPackageSummary = { execute: sinon.stub() }
     reportCreateStub = sinon.stub(reports, 'create')
+    reportCreateStub.returns(mockPackageSummary)
 
     m = loadFile(path.join(__dirname, '/../lib/reporter.js'), mocks)
   })
@@ -162,22 +158,22 @@ describe('reporter', () => {
       expect(mockCoverageMap.merge).not.to.have.been.called
     })
 
-    it('should make reports', () => {
-      reporter.onRunComplete(browsers)
+    it('should make reports', async () => {
+      await reporter.onRunComplete(browsers)
       expect(mkdirIfNotExistsStub).to.have.been.calledTwice
       const dir = rootConfig.coverageReporter.dir
       expect(mkdirIfNotExistsStub.getCall(0).args[0]).to.deep.equal(resolve('/base', dir, fakeChrome.name))
       expect(mkdirIfNotExistsStub.getCall(1).args[0]).to.deep.equal(resolve('/base', dir, fakeOpera.name))
       mkdirIfNotExistsStub.getCall(0).args[1]()
       expect(reportCreateStub).to.have.been.called
-      expect(mockPackageSummary.visit).to.have.been.called
+      expect(mockPackageSummary.execute).to.have.been.called
       const createArgs = reportCreateStub.getCall(0).args
       expect(createArgs[0]).to.be.equal('html')
       expect(createArgs[1].browser).to.be.equal(fakeChrome)
       expect(createArgs[1].emitter).to.be.equal(emitter)
     })
 
-    it('should support a string for the subdir option', () => {
+    it('should support a string for the subdir option', async () => {
       const customConfig = helper.merge({}, rootConfig, {
         coverageReporter: {
           subdir: 'test'
@@ -188,7 +184,7 @@ describe('reporter', () => {
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
 
-      reporter.onRunComplete(browsers)
+      await reporter.onRunComplete(browsers)
       expect(mkdirIfNotExistsStub).to.have.been.calledTwice
       const dir = customConfig.coverageReporter.dir
       const subdir = customConfig.coverageReporter.subdir
@@ -196,10 +192,10 @@ describe('reporter', () => {
       expect(mkdirIfNotExistsStub.getCall(1).args[0]).to.deep.equal(resolve('/base', dir, subdir))
       mkdirIfNotExistsStub.getCall(0).args[1]()
       expect(reportCreateStub).to.have.been.called
-      expect(mockPackageSummary.visit).to.have.been.called
+      expect(mockPackageSummary.execute).to.have.been.called
     })
 
-    it('should support a function for the subdir option', () => {
+    it('should support a function for the subdir option', async () => {
       const customConfig = helper.merge({}, rootConfig, {
         coverageReporter: {
           subdir: (browserName) => browserName.toLowerCase().split(/[ /-]/)[0]
@@ -210,17 +206,17 @@ describe('reporter', () => {
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
 
-      reporter.onRunComplete(browsers)
+      await reporter.onRunComplete(browsers)
       expect(mkdirIfNotExistsStub).to.have.been.calledTwice
       const dir = customConfig.coverageReporter.dir
       expect(mkdirIfNotExistsStub.getCall(0).args[0]).to.deep.equal(resolve('/base', dir, 'chrome'))
       expect(mkdirIfNotExistsStub.getCall(1).args[0]).to.deep.equal(resolve('/base', dir, 'opera'))
       mkdirIfNotExistsStub.getCall(0).args[1]()
       expect(reportCreateStub).to.have.been.called
-      expect(mockPackageSummary.visit).to.have.been.called
+      expect(mockPackageSummary.execute).to.have.been.called
     })
 
-    it('should support a specific dir and subdir per reporter', () => {
+    it('should support a specific dir and subdir per reporter', async () => {
       const customConfig = helper.merge({}, rootConfig, {
         coverageReporter: {
           dir: 'useless',
@@ -242,7 +238,7 @@ describe('reporter', () => {
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
 
-      reporter.onRunComplete(browsers)
+      await reporter.onRunComplete(browsers)
       expect(mkdirIfNotExistsStub.callCount).to.equal(4)
       expect(mkdirIfNotExistsStub.getCall(0).args[0]).to.deep.equal(resolve('/base', 'reporter1', 'chrome'))
       expect(mkdirIfNotExistsStub.getCall(1).args[0]).to.deep.equal(resolve('/base', 'reporter1', 'opera'))
@@ -250,10 +246,10 @@ describe('reporter', () => {
       expect(mkdirIfNotExistsStub.getCall(3).args[0]).to.deep.equal(resolve('/base', 'reporter2', 'OPERA'))
       mkdirIfNotExistsStub.getCall(0).args[1]()
       expect(reportCreateStub).to.have.been.called
-      expect(mockPackageSummary.visit).to.have.been.called
+      expect(mockPackageSummary.execute).to.have.been.called
     })
 
-    it('should fallback to the default dir/subdir if not provided', () => {
+    it('should fallback to the default dir/subdir if not provided', async () => {
       const customConfig = helper.merge({}, rootConfig, {
         coverageReporter: {
           dir: 'defaultdir',
@@ -273,7 +269,7 @@ describe('reporter', () => {
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
 
-      reporter.onRunComplete(browsers)
+      await reporter.onRunComplete(browsers)
       expect(mkdirIfNotExistsStub.callCount).to.equal(4)
       expect(mkdirIfNotExistsStub.getCall(0).args[0]).to.deep.equal(resolve('/base', 'reporter1', 'defaultsubdir'))
       expect(mkdirIfNotExistsStub.getCall(1).args[0]).to.deep.equal(resolve('/base', 'reporter1', 'defaultsubdir'))
@@ -281,40 +277,40 @@ describe('reporter', () => {
       expect(mkdirIfNotExistsStub.getCall(3).args[0]).to.deep.equal(resolve('/base', 'defaultdir', 'OPERA'))
       mkdirIfNotExistsStub.getCall(0).args[1]()
       expect(reportCreateStub).to.have.been.called
-      expect(mockPackageSummary.visit).to.have.been.called
+      expect(mockPackageSummary.execute).to.have.been.called
     })
 
-    it('should not create directory if reporting text* to console', () => {
+    it('should not create directory if reporting text* to console', async () => {
       const run = () => {
         reporter = new m.CoverageReporter(rootConfig, mockHelper, mockLogger)
         reporter.onRunStart()
         browsers.forEach(b => reporter.onBrowserStart(b))
-        reporter.onRunComplete(browsers)
+        return reporter.onRunComplete(browsers)
       }
 
       rootConfig.coverageReporter.reporters = [
         { type: 'text' },
         { type: 'text-summary' }
       ]
-      run()
+      await run()
       expect(mkdirIfNotExistsStub).not.to.have.been.called
     })
 
-    it('should create directory if reporting text* to file', () => {
+    it('should create directory if reporting text* to file', async () => {
       const run = () => {
         reporter = new m.CoverageReporter(rootConfig, mockHelper, mockLogger)
         reporter.onRunStart()
         browsers.forEach(b => reporter.onBrowserStart(b))
-        reporter.onRunComplete(browsers)
+        return reporter.onRunComplete(browsers)
       }
 
       rootConfig.coverageReporter.reporters = [{ type: 'text', file: 'file' }]
-      run()
+      await run()
       expect(mkdirIfNotExistsStub).to.have.been.calledTwice
 
       mkdirIfNotExistsStub.resetHistory()
       rootConfig.coverageReporter.reporters = [{ type: 'text-summary', file: 'file' }]
-      run()
+      await run()
       expect(mkdirIfNotExistsStub).to.have.been.calledTwice
     })
 
@@ -370,7 +366,7 @@ describe('reporter', () => {
       expect(globalCoverageMapGetStub).not.to.have.been.called
     })
 
-    it('should pass watermarks to istanbul', () => {
+    it('should pass watermarks to istanbul', async () => {
       const watermarks = {
         statements: [10, 20],
         branches: [30, 40],
@@ -395,7 +391,7 @@ describe('reporter', () => {
       reporter = new m.CoverageReporter(customConfig, mockHelper, mockLogger)
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
-      reporter.onRunComplete(browsers)
+      await reporter.onRunComplete(browsers)
 
       expect(createContextStub).to.have.been.called
       expect(reportCreateStub).to.have.been.called
@@ -403,7 +399,7 @@ describe('reporter', () => {
       expect(options.args[1].watermarks).to.deep.equal(watermarks)
     })
 
-    it('should merge with istanbul default watermarks', () => {
+    it('should merge with istanbul default watermarks', async () => {
       const watermarks = {
         statements: [10, 20],
         lines: [70, 80]
@@ -426,7 +422,7 @@ describe('reporter', () => {
       reporter = new m.CoverageReporter(customConfig, mockHelper, mockLogger)
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
-      reporter.onRunComplete(browsers)
+      await reporter.onRunComplete(browsers)
 
       expect(createContextStub).to.have.been.called
       expect(reportCreateStub).to.have.been.called
@@ -437,7 +433,7 @@ describe('reporter', () => {
       expect(options.args[1].watermarks.lines).to.deep.equal(watermarks.lines)
     })
 
-    it('should log errors on low coverage and fail the build', () => {
+    it('should log errors on low coverage and fail the build', async () => {
       const customConfig = helper.merge({}, rootConfig, {
         coverageReporter: {
           check: {
@@ -472,13 +468,13 @@ describe('reporter', () => {
       reporter = new m.CoverageReporter(customConfig, mockHelper, customLogger)
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
-      reporter.onRunComplete(browsers, results)
+      await reporter.onRunComplete(browsers, results)
 
       expect(spy1).to.have.been.called
       expect(results.exitCode).to.not.equal(0)
     })
 
-    it('should not log errors on sufficient coverage and not fail the build', () => {
+    it('should not log errors on sufficient coverage and not fail the build', async () => {
       const customConfig = helper.merge({}, rootConfig, {
         coverageReporter: {
           check: {
@@ -513,7 +509,7 @@ describe('reporter', () => {
       reporter = new m.CoverageReporter(customConfig, mockHelper, customLogger)
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
-      reporter.onRunComplete(browsers, results)
+      await reporter.onRunComplete(browsers, results)
 
       expect(spy1).to.not.have.been.called
 
