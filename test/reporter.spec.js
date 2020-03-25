@@ -49,8 +49,8 @@ describe('reporter', () => {
   let globalCoverageMapGetStub = null
   let reportCreateStub = null
 
-  const mockFs = {writeFile: sinon.spy()}
-  const mocks = {fs: mockFs}
+  const mockFs = { writeFile: sinon.spy() }
+  const mocks = { fs: mockFs }
 
   beforeEach(() => {
     mockCoverageSummary = {
@@ -111,19 +111,21 @@ describe('reporter', () => {
     let browsers = null
     let fakeChrome = null
     let fakeOpera = null
-    const mockLogger = { create: (name) => {
-      return {
-        debug () {},
-        info () {},
-        warn () {},
-        error () {}
+    const mockLogger = {
+      create: (name) => {
+        return {
+          debug () {},
+          info () {},
+          warn () {},
+          error () {}
+        }
       }
-    }}
+    }
 
     beforeEach(() => {
       rootConfig = {
         basePath: '/base',
-        coverageReporter: {dir: 'path/to/coverage/'}
+        coverageReporter: { dir: 'path/to/coverage/' }
       }
       emitter = new events.EventEmitter()
       reporter = new m.CoverageReporter(rootConfig, mockHelper, mockLogger, emitter)
@@ -446,24 +448,26 @@ describe('reporter', () => {
 
       mockCoverageMap.files.returns(['./foo/bar.js', './foo/baz.js'])
       mockCoverageSummary.toJSON.returns({
-        lines: {total: 5, covered: 1, skipped: 0, pct: 20},
-        statements: {total: 5, covered: 1, skipped: 0, pct: 20},
-        functions: {total: 5, covered: 1, skipped: 0, pct: 20},
-        branches: {total: 5, covered: 1, skipped: 0, pct: 20}
+        lines: { total: 5, covered: 1, skipped: 0, pct: 20 },
+        statements: { total: 5, covered: 1, skipped: 0, pct: 20 },
+        functions: { total: 5, covered: 1, skipped: 0, pct: 20 },
+        branches: { total: 5, covered: 1, skipped: 0, pct: 20 }
       })
 
       const spy1 = sinon.spy()
 
-      const customLogger = {create: (name) => {
-        return {
-          debug () {},
-          info () {},
-          warn () {},
-          error: spy1
+      const customLogger = {
+        create: (name) => {
+          return {
+            debug () {},
+            info () {},
+            warn () {},
+            error: spy1
+          }
         }
-      }}
+      }
 
-      const results = {exitCode: 0}
+      const results = { exitCode: 0 }
 
       reporter = new m.CoverageReporter(customConfig, mockHelper, customLogger)
       reporter.onRunStart()
@@ -487,24 +491,26 @@ describe('reporter', () => {
 
       mockCoverageMap.files.returns(['./foo/bar.js', './foo/baz.js'])
       mockCoverageSummary.toJSON.returns({
-        lines: {total: 5, covered: 1, skipped: 0, pct: 20},
-        statements: {total: 5, covered: 1, skipped: 0, pct: 20},
-        functions: {total: 5, covered: 1, skipped: 0, pct: 20},
-        branches: {total: 5, covered: 1, skipped: 0, pct: 20}
+        lines: { total: 5, covered: 1, skipped: 0, pct: 20 },
+        statements: { total: 5, covered: 1, skipped: 0, pct: 20 },
+        functions: { total: 5, covered: 1, skipped: 0, pct: 20 },
+        branches: { total: 5, covered: 1, skipped: 0, pct: 20 }
       })
 
       const spy1 = sinon.spy()
 
-      const customLogger = {create: (name) => {
-        return {
-          debug () {},
-          info () {},
-          warn () {},
-          error: spy1
+      const customLogger = {
+        create: (name) => {
+          return {
+            debug () {},
+            info () {},
+            warn () {},
+            error: spy1
+          }
         }
-      }}
+      }
 
-      const results = {exitCode: 0}
+      const results = { exitCode: 0 }
 
       reporter = new m.CoverageReporter(customConfig, mockHelper, customLogger)
       reporter.onRunStart()

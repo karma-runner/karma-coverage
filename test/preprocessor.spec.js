@@ -22,14 +22,16 @@ describe('preprocessor', () => {
     other()
   `
 
-  const mockLogger = {create: () => {
-    return {
-      error: (...arg) => { throw new Error(util.format.apply(util, arg)) },
-      warn: () => {},
-      info: () => {},
-      debug: () => {}
+  const mockLogger = {
+    create: () => {
+      return {
+        error: (...arg) => { throw new Error(util.format.apply(util, arg)) },
+        warn: () => {},
+        info: () => {},
+        debug: () => {}
+      }
     }
-  }}
+  }
 
   // TODO(vojta): refactor this somehow ;-) it's copy pasted from lib/file-list.js
   function File (path, mtime) {
@@ -72,6 +74,7 @@ describe('preprocessor', () => {
       instrument (_a, _b, callback) {
         callback()
       }
+
       lastSourceMap () {}
     }
     const process = createPreprocessor(mockLogger, '/base/path', ['coverage', 'progress'], {
@@ -103,9 +106,11 @@ describe('preprocessor', () => {
       constructor (options) {
         expect(options.experimental).to.be.ok
       }
+
       instrument (_a, _b, callback) {
         callback()
       }
+
       lastSourceMap () {}
     }
     const process = createPreprocessor(mockLogger, '/base/path', ['coverage', 'progress'], {
@@ -129,7 +134,7 @@ describe('preprocessor', () => {
   })
 
   it('should not preprocess the coffee code', (done) => {
-    const process = createPreprocessor(mockLogger, '/base/path', ['coverage', 'progress'], {instrumenter: {'**/*.coffee': 'istanbul'}})
+    const process = createPreprocessor(mockLogger, '/base/path', ['coverage', 'progress'], { instrumenter: { '**/*.coffee': 'istanbul' } })
     const file = new File('/base/path/file.coffee')
 
     process(ORIGINAL_CODE, file, (preprocessedCode) => {
@@ -147,7 +152,7 @@ describe('preprocessor', () => {
 
   it('should fail if invalid instrumenter provided', () => {
     const work = () => {
-      createPreprocessor(mockLogger, '/base/path', ['coverage', 'progress'], {instrumenter: {'**/*.coffee': 'madeup'}})
+      createPreprocessor(mockLogger, '/base/path', ['coverage', 'progress'], { instrumenter: { '**/*.coffee': 'madeup' } })
     }
     expect(work).to.throw()
   })
@@ -193,6 +198,7 @@ describe('preprocessor', () => {
       instrument (_a, _b, callback) {
         callback()
       }
+
       lastSourceMap () {}
     }
 
