@@ -1,17 +1,17 @@
 const InMemoryReport = require('../lib/in-memory-report')
 
 describe('InMemoryReport', () => {
-  const emitter = {emit: sinon.stub()}
+  const emitter = { emit: sinon.stub() }
   const browser = { name: 'firefox' }
   const result = { test: { data: 'result' } }
   const fc = {
     path: 'test',
     toJSON: sinon.stub().returns({ data: 'result' })
   }
-  const node = {getFileCoverage: sinon.stub().returns(fc)}
+  const node = { getFileCoverage: sinon.stub().returns(fc) }
 
   it('should raise an "coverage_complete" event.', () => {
-    const sut = new InMemoryReport({browser, emitter})
+    const sut = new InMemoryReport({ browser, emitter })
     sut.onStart()
     sut.onDetail(node)
     sut.onEnd()

@@ -7,5 +7,13 @@
   "globals": {
     "expect": true,
     "sinon": true
-  }
+  },
+  "overrides": [
+    {
+      "files": ["test/**/*.js"],
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
 }
