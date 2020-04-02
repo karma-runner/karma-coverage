@@ -10,5 +10,6 @@ before_script:
   - npm install -g grunt-cli
 
 script:
+  - commitlint-travis
   - npm run lint
   - grunt
