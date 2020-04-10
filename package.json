@@ -29,6 +29,9 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/travis-cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
     "chai": "^4.2.0",
     "eslint": "^6.5.1",
     "eslint-config-standard": "^14.1.0",
@@ -44,6 +47,7 @@
     "grunt-karma": "^3.0.2",
     "grunt-npm": "^0.0.2",
     "grunt-simple-mocha": "^0.4.1",
+    "husky": "^4.2.3",
     "ibrik": "^2.0.0",
     "karma": "^4.2.0",
     "karma-coffee-preprocessor": "1.x || ^0.3.0",
@@ -59,6 +63,16 @@
   },
   "engines": {
     "node": ">=10.0.0"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   },
   "contributors": [
     "dignifiedquire <dignifiedquire@gmail.com>",
