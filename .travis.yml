@@ -9,6 +9,12 @@ services:
 before_script:
   - npm install -g grunt-cli
 
+after_success:
+  # run automated release process with semantic-release
+  - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_EVENT_TYPE" == "push" && "$TRAVIS_NODE_VERSION" == "12" ]]; then
+      semantic-release;
+    fi;
+
 script:
   - commitlint-travis
   - npm run lint
