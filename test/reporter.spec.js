@@ -161,7 +161,8 @@ describe('reporter', () => {
     })
 
     it('should make reports', async () => {
-      await reporter.onRunComplete(browsers)
+      reporter.onRunComplete(browsers)
+      await reporter.reportsDone
       expect(mkdirIfNotExistsStub).to.have.been.calledTwice
       const dir = rootConfig.coverageReporter.dir
       expect(mkdirIfNotExistsStub.getCall(0).args[0]).to.deep.equal(resolve('/base', dir, fakeChrome.name))
@@ -186,7 +187,8 @@ describe('reporter', () => {
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
 
-      await reporter.onRunComplete(browsers)
+      reporter.onRunComplete(browsers)
+      await reporter.reportsDone
       expect(mkdirIfNotExistsStub).to.have.been.calledTwice
       const dir = customConfig.coverageReporter.dir
       const subdir = customConfig.coverageReporter.subdir
@@ -208,7 +210,8 @@ describe('reporter', () => {
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
 
-      await reporter.onRunComplete(browsers)
+      reporter.onRunComplete(browsers)
+      await reporter.reportsDone
       expect(mkdirIfNotExistsStub).to.have.been.calledTwice
       const dir = customConfig.coverageReporter.dir
       expect(mkdirIfNotExistsStub.getCall(0).args[0]).to.deep.equal(resolve('/base', dir, 'chrome'))
@@ -240,7 +243,8 @@ describe('reporter', () => {
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
 
-      await reporter.onRunComplete(browsers)
+      reporter.onRunComplete(browsers)
+      await reporter.reportsDone
       expect(mkdirIfNotExistsStub.callCount).to.equal(4)
       expect(mkdirIfNotExistsStub.getCall(0).args[0]).to.deep.equal(resolve('/base', 'reporter1', 'chrome'))
       expect(mkdirIfNotExistsStub.getCall(1).args[0]).to.deep.equal(resolve('/base', 'reporter1', 'opera'))
@@ -271,7 +275,8 @@ describe('reporter', () => {
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
 
-      await reporter.onRunComplete(browsers)
+      reporter.onRunComplete(browsers)
+      await reporter.reportsDone
       expect(mkdirIfNotExistsStub.callCount).to.equal(4)
       expect(mkdirIfNotExistsStub.getCall(0).args[0]).to.deep.equal(resolve('/base', 'reporter1', 'defaultsubdir'))
       expect(mkdirIfNotExistsStub.getCall(1).args[0]).to.deep.equal(resolve('/base', 'reporter1', 'defaultsubdir'))
@@ -303,7 +308,8 @@ describe('reporter', () => {
         reporter = new m.CoverageReporter(rootConfig, mockHelper, mockLogger)
         reporter.onRunStart()
         browsers.forEach(b => reporter.onBrowserStart(b))
-        return reporter.onRunComplete(browsers)
+        reporter.onRunComplete(browsers)
+        return reporter.reportsDone
       }
 
       rootConfig.coverageReporter.reporters = [{ type: 'text', file: 'file' }]
@@ -393,7 +399,8 @@ describe('reporter', () => {
       reporter = new m.CoverageReporter(customConfig, mockHelper, mockLogger)
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
-      await reporter.onRunComplete(browsers)
+      reporter.onRunComplete(browsers)
+      await reporter.reportsDone
 
       expect(createContextStub).to.have.been.called
       expect(reportCreateStub).to.have.been.called
@@ -424,7 +431,8 @@ describe('reporter', () => {
       reporter = new m.CoverageReporter(customConfig, mockHelper, mockLogger)
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
-      await reporter.onRunComplete(browsers)
+      reporter.onRunComplete(browsers)
+      await reporter.reportsDone
 
       expect(createContextStub).to.have.been.called
       expect(reportCreateStub).to.have.been.called
@@ -467,15 +475,14 @@ describe('reporter', () => {
         }
       }
 
-      const results = { exitCode: 0 }
-
       reporter = new m.CoverageReporter(customConfig, mockHelper, customLogger)
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
-      await reporter.onRunComplete(browsers, results)
+      reporter.onRunComplete(browsers)
+      const exitCode = await reporter.reportsDone
 
       expect(spy1).to.have.been.called
-      expect(results.exitCode).to.not.equal(0)
+      expect(exitCode).to.not.equal(0)
     })
 
     it('should not log errors on sufficient coverage and not fail the build', async () => {
@@ -510,16 +517,15 @@ describe('reporter', () => {
         }
       }
 
-      const results = { exitCode: 0 }
-
       reporter = new m.CoverageReporter(customConfig, mockHelper, customLogger)
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
-      await reporter.onRunComplete(browsers, results)
+      reporter.onRunComplete(browsers)
+      const exitCode = await reporter.reportsDone
 
       expect(spy1).to.not.have.been.called
 
-      expect(results.exitCode).to.equal(0)
+      expect(exitCode).to.equal(0)
     })
   })
 })
