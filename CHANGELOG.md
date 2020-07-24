@@ -1,3 +1,10 @@
+## [2.0.3](https://github.com/karma-runner/karma-coverage/compare/v2.0.2...v2.0.3) (2020-07-24)
+
+
+### Bug Fixes
+
+* **report:** waiting promise resolve in onExist method fix [#418](https://github.com/karma-runner/karma-coverage/issues/418) ([c93f061](https://github.com/karma-runner/karma-coverage/commit/c93f0612da6898fb5cfbb9ece57556a2704c4397))
+
 ## [2.0.2](https://github.com/karma-runner/karma-coverage/compare/v2.0.1...v2.0.2) (2020-04-13)
 
 
