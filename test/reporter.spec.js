@@ -141,9 +141,9 @@ describe('reporter', () => {
       mkdirIfNotExistsStub.resetHistory()
     })
 
-    it('has no pending file writings', () => {
+    it('has no pending file writings', async () => {
       const done = sinon.spy()
-      reporter.onExit(done)
+      await reporter.onExit(done)
       expect(done).to.have.been.called
     })
 
@@ -298,6 +298,20 @@ describe('reporter', () => {
       expect(mkdirIfNotExistsStub).not.to.have.been.called
     })
 
+    it('should calls done callback when onComplete event will be complete', async () => {
+      reporter = new m.CoverageReporter(rootConfig, mockHelper, mockLogger)
+      reporter.onRunStart()
+      browsers.forEach(b => reporter.onBrowserStart(b))
+      reporter.onRunComplete(browsers)
+      const done = sinon.stub()
+
+      const promiseExit = reporter.onExit(done)
+
+      expect(done.notCalled).to.be.true
+      await promiseExit
+      expect(done.calledOnce).to.be.true
+    })
+
     it('should create directory if reporting text* to file', async () => {
       const run = () => {
         reporter = new m.CoverageReporter(rootConfig, mockHelper, mockLogger)
@@ -435,7 +449,7 @@ describe('reporter', () => {
       expect(options.args[1].watermarks.lines).to.deep.equal(watermarks.lines)
     })
 
-    it('should log errors on low coverage and fail the build', async () => {
+    it.only('should log errors on low coverage and fail the build', async () => {
       const customConfig = helper.merge({}, rootConfig, {
         coverageReporter: {
           check: {
@@ -472,10 +486,13 @@ describe('reporter', () => {
       reporter = new m.CoverageReporter(customConfig, mockHelper, customLogger)
       reporter.onRunStart()
       browsers.forEach(b => reporter.onBrowserStart(b))
-      await reporter.onRunComplete(browsers, results)
+      reporter.onRunComplete(browsers, results)
+
+      const done = sinon.stub()
+      await reporter.onExit(done)
 
       expect(spy1).to.have.been.called
-      expect(results.exitCode).to.not.equal(0)
+      expect(done.calledOnceWith(1)).to.be.true
     })
 
     it('should not log errors on sufficient coverage and not fail the build', async () => {
