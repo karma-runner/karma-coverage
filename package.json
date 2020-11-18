@@ -61,7 +61,7 @@
     "mocha": "^6.0.2",
     "mocks": "0.0.15",
     "requirejs": "^2.1.20",
-    "semantic-release": "17.0.4",
+    "semantic-release": "17.2.3",
     "sinon": "^7.2.7",
     "sinon-chai": "^3.3.0"
   },
