@@ -538,5 +538,53 @@ describe('reporter', () => {
 
       expect(results.exitCode).to.equal(0)
     })
+
+    it('Should log warnings on low coverage and not fail the build', async () => {
+      const customConfig = helper.merge({}, rootConfig, {
+        coverageReporter: {
+          check: {
+            emitWarning: true,
+            each: {
+              statements: 50
+            }
+          }
+        }
+      })
+
+      mockCoverageMap.files.returns(['./foo/bar.js', './foo/baz.js'])
+      mockCoverageSummary.toJSON.returns({
+        lines: { total: 5, covered: 1, skipped: 0, pct: 20 },
+        statements: { total: 5, covered: 1, skipped: 0, pct: 20 },
+        functions: { total: 5, covered: 1, skipped: 0, pct: 20 },
+        branches: { total: 5, covered: 1, skipped: 0, pct: 20 }
+      })
+
+      const log = {
+        debug () {},
+        info () {},
+        warn: sinon.stub(),
+        error: sinon.stub()
+      }
+
+      const customLogger = {
+        create: (name) => {
+          return log
+        }
+      }
+
+      const results = { exitCode: 0 }
+
+      reporter = new m.CoverageReporter(customConfig, mockHelper, customLogger)
+      reporter.onRunStart()
+      browsers.forEach(b => reporter.onBrowserStart(b))
+      reporter.onRunComplete(browsers, results)
+
+      const done = sinon.stub()
+      await reporter.onExit(done)
+
+      expect(log.error).to.not.have.been.called
+      expect(log.warn).to.have.been.called
+      expect(done.calledOnce).to.be.true
+    })
   })
 })
