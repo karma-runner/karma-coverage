@@ -1,18 +1,6 @@
 module.exports = function (grunt) {
   grunt.initConfig({
     pkgFile: 'package.json',
-    simplemocha: {
-      options: {
-        ui: 'bdd',
-        reporter: 'dot'
-      },
-      unit: {
-        src: [
-          'test/mocha-globals.js',
-          'test/*.spec.js'
-        ]
-      }
-    },
     'npm-contributors': {
       options: {
         commitMessage: 'chore: update contributors'
@@ -63,7 +51,7 @@ module.exports = function (grunt) {
 
   require('load-grunt-tasks')(grunt)
 
-  grunt.registerTask('default', ['simplemocha', 'karma'])
+  grunt.registerTask('default', ['karma'])
 
   grunt.registerTask('release', 'Bump the version and publish to NPM.', function (type) {
     grunt.task.run([

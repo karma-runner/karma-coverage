@@ -9,4 +9,8 @@ global.sinon = sinon
 // chai plugins
 chai.use(require('sinon-chai'))
 
-afterEach(() => global.sinon.restore())
+exports.mochaHooks = {
+  afterEach () {
+    sinon.restore()
+  }
+}
