@@ -449,7 +449,7 @@ describe('reporter', () => {
       expect(options.args[1].watermarks.lines).to.deep.equal(watermarks.lines)
     })
 
-    it.only('should log errors on low coverage and fail the build', async () => {
+    it('should log errors on low coverage and fail the build', async () => {
       const customConfig = helper.merge({}, rootConfig, {
         coverageReporter: {
           check: {
