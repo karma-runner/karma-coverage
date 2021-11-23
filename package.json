@@ -8,7 +8,9 @@
     "test": "mocha",
     "update-contributors": "grunt contributors",
     "examples": "grunt karma",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "release": "npm run update-contributors && semantic-release",
+    "commitlint": "commitlint"
   },
   "repository": {
     "type": "git",
