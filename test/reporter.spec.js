@@ -584,5 +584,37 @@ describe('reporter', () => {
       expect(log.warn).to.have.been.called
       expect(done.calledOnce).to.be.true
     })
+
+    it('should handle unexpected errors during the coverage generation', async () => {
+      const errorSpy = sinon.spy()
+      const doneSpy = sinon.spy()
+
+      const customLogger = {
+        create: () => {
+          return {
+            debug () {},
+            info () {},
+            warn () {},
+            error: errorSpy
+          }
+        }
+      }
+
+      const error = new Error('Directory creation failed!')
+
+      const customHelper = {
+        ...mockHelper,
+        mkdirIfNotExists: async (_, done) => done(error)
+      }
+
+      reporter = new m.CoverageReporter(rootConfig, customHelper, customLogger)
+      reporter.onRunStart()
+      browsers.forEach(b => reporter.onBrowserStart(b))
+      reporter.onRunComplete(browsers)
+      await reporter.onExit(doneSpy)
+
+      expect(errorSpy).to.have.been.calledOnceWith('Unexpected error while generating coverage report.\n', error)
+      expect(doneSpy).to.have.been.calledOnceWith(1)
+    })
   })
 })
