@@ -1,3 +1,11 @@
+## [2.1.1](https://github.com/karma-runner/karma-coverage/compare/v2.1.0...v2.1.1) (2022-02-05)
+
+
+### Bug Fixes
+
+* handle unexpected error when generating code coverage ([bca2c69](https://github.com/karma-runner/karma-coverage/commit/bca2c69d43332598acb30d8e5d6e26d783bc06fb)), closes [/github.com/karma-runner/karma/blob/c985155a4eac95c525e1217e98d4013ac5f53305/lib/server.js#L392](https://github.com//github.com/karma-runner/karma/blob/c985155a4eac95c525e1217e98d4013ac5f53305/lib/server.js/issues/L392)
+* race condition between the Karma shutdown and coverage writing ([44b31eb](https://github.com/karma-runner/karma-coverage/commit/44b31eba5a221e6e049b6dff426207f555b379e2)), closes [#434](https://github.com/karma-runner/karma-coverage/issues/434)
+
 # [2.1.0](https://github.com/karma-runner/karma-coverage/compare/v2.0.3...v2.1.0) (2021-12-01)
 
 
