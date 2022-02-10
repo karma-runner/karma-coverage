@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/karma-runner/karma-coverage/compare/v2.1.1...v2.2.0) (2022-02-10)
+
+
+### Features
+
+* update Istanbul packages ([24aac11](https://github.com/karma-runner/karma-coverage/commit/24aac11aacef75aab720f69aabaa9651cc770630))
+
 ## [2.1.1](https://github.com/karma-runner/karma-coverage/compare/v2.1.0...v2.1.1) (2022-02-05)
 
 
