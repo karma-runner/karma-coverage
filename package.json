@@ -54,7 +54,7 @@
     "grunt-npm": "^0.0.2",
     "husky": "^4.3.8",
     "ibrik": "^2.0.0",
-    "karma": "^4.2.0",
+    "karma": "^6.3.14",
     "karma-coffee-preprocessor": "^1.0.1",
     "karma-firefox-launcher": "1.x || ^0.1.6",
     "karma-mocha": "^2.0.1",
