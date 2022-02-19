@@ -27,7 +27,10 @@ describe('reporter', () => {
   const mockHelper = {
     isDefined: (v) => helper.isDefined(v),
     merge: (...arg) => helper.merge(...arg),
-    mkdirIfNotExists: mkdirIfNotExistsStub,
+    mkdirIfNotExists: (dir, done) => {
+      mkdirIfNotExistsStub(dir, done)
+      setTimeout(done, 0)
+    },
     normalizeWinPath: (path) => helper.normalizeWinPath(path)
   }
 
@@ -166,7 +169,6 @@ describe('reporter', () => {
       const dir = rootConfig.coverageReporter.dir
       expect(mkdirIfNotExistsStub.getCall(0).args[0]).to.deep.equal(resolve('/base', dir, fakeChrome.name))
       expect(mkdirIfNotExistsStub.getCall(1).args[0]).to.deep.equal(resolve('/base', dir, fakeOpera.name))
-      mkdirIfNotExistsStub.getCall(0).args[1]()
       expect(reportCreateStub).to.have.been.called
       expect(mockPackageSummary.execute).to.have.been.called
       const createArgs = reportCreateStub.getCall(0).args
@@ -192,7 +194,6 @@ describe('reporter', () => {
       const subdir = customConfig.coverageReporter.subdir
       expect(mkdirIfNotExistsStub.getCall(0).args[0]).to.deep.equal(resolve('/base', dir, subdir))
       expect(mkdirIfNotExistsStub.getCall(1).args[0]).to.deep.equal(resolve('/base', dir, subdir))
-      mkdirIfNotExistsStub.getCall(0).args[1]()
       expect(reportCreateStub).to.have.been.called
       expect(mockPackageSummary.execute).to.have.been.called
     })
@@ -213,7 +214,6 @@ describe('reporter', () => {
       const dir = customConfig.coverageReporter.dir
       expect(mkdirIfNotExistsStub.getCall(0).args[0]).to.deep.equal(resolve('/base', dir, 'chrome'))
       expect(mkdirIfNotExistsStub.getCall(1).args[0]).to.deep.equal(resolve('/base', dir, 'opera'))
-      mkdirIfNotExistsStub.getCall(0).args[1]()
       expect(reportCreateStub).to.have.been.called
       expect(mockPackageSummary.execute).to.have.been.called
     })
@@ -246,7 +246,6 @@ describe('reporter', () => {
       expect(mkdirIfNotExistsStub.getCall(1).args[0]).to.deep.equal(resolve('/base', 'reporter1', 'opera'))
       expect(mkdirIfNotExistsStub.getCall(2).args[0]).to.deep.equal(resolve('/base', 'reporter2', 'CHROME'))
       expect(mkdirIfNotExistsStub.getCall(3).args[0]).to.deep.equal(resolve('/base', 'reporter2', 'OPERA'))
-      mkdirIfNotExistsStub.getCall(0).args[1]()
       expect(reportCreateStub).to.have.been.called
       expect(mockPackageSummary.execute).to.have.been.called
     })
@@ -277,7 +276,6 @@ describe('reporter', () => {
       expect(mkdirIfNotExistsStub.getCall(1).args[0]).to.deep.equal(resolve('/base', 'reporter1', 'defaultsubdir'))
       expect(mkdirIfNotExistsStub.getCall(2).args[0]).to.deep.equal(resolve('/base', 'defaultdir', 'CHROME'))
       expect(mkdirIfNotExistsStub.getCall(3).args[0]).to.deep.equal(resolve('/base', 'defaultdir', 'OPERA'))
-      mkdirIfNotExistsStub.getCall(0).args[1]()
       expect(reportCreateStub).to.have.been.called
       expect(mockPackageSummary.execute).to.have.been.called
     })
@@ -449,7 +447,7 @@ describe('reporter', () => {
       expect(options.args[1].watermarks.lines).to.deep.equal(watermarks.lines)
     })
 
-    it.only('should log errors on low coverage and fail the build', async () => {
+    it('should log errors on low coverage and fail the build', async () => {
       const customConfig = helper.merge({}, rootConfig, {
         coverageReporter: {
           check: {
@@ -537,6 +535,86 @@ describe('reporter', () => {
       expect(spy1).to.not.have.been.called
 
       expect(results.exitCode).to.equal(0)
+    })
+
+    it('Should log warnings on low coverage and not fail the build', async () => {
+      const customConfig = helper.merge({}, rootConfig, {
+        coverageReporter: {
+          check: {
+            emitWarning: true,
+            each: {
+              statements: 50
+            }
+          }
+        }
+      })
+
+      mockCoverageMap.files.returns(['./foo/bar.js', './foo/baz.js'])
+      mockCoverageSummary.toJSON.returns({
+        lines: { total: 5, covered: 1, skipped: 0, pct: 20 },
+        statements: { total: 5, covered: 1, skipped: 0, pct: 20 },
+        functions: { total: 5, covered: 1, skipped: 0, pct: 20 },
+        branches: { total: 5, covered: 1, skipped: 0, pct: 20 }
+      })
+
+      const log = {
+        debug () {},
+        info () {},
+        warn: sinon.stub(),
+        error: sinon.stub()
+      }
+
+      const customLogger = {
+        create: (name) => {
+          return log
+        }
+      }
+
+      const results = { exitCode: 0 }
+
+      reporter = new m.CoverageReporter(customConfig, mockHelper, customLogger)
+      reporter.onRunStart()
+      browsers.forEach(b => reporter.onBrowserStart(b))
+      reporter.onRunComplete(browsers, results)
+
+      const done = sinon.stub()
+      await reporter.onExit(done)
+
+      expect(log.error).to.not.have.been.called
+      expect(log.warn).to.have.been.called
+      expect(done.calledOnce).to.be.true
+    })
+
+    it('should handle unexpected errors during the coverage generation', async () => {
+      const errorSpy = sinon.spy()
+      const doneSpy = sinon.spy()
+
+      const customLogger = {
+        create: () => {
+          return {
+            debug () {},
+            info () {},
+            warn () {},
+            error: errorSpy
+          }
+        }
+      }
+
+      const error = new Error('Directory creation failed!')
+
+      const customHelper = {
+        ...mockHelper,
+        mkdirIfNotExists: async (_, done) => done(error)
+      }
+
+      reporter = new m.CoverageReporter(rootConfig, customHelper, customLogger)
+      reporter.onRunStart()
+      browsers.forEach(b => reporter.onBrowserStart(b))
+      reporter.onRunComplete(browsers)
+      await reporter.onExit(doneSpy)
+
+      expect(errorSpy).to.have.been.calledOnceWith('Unexpected error while generating coverage report.\n', error)
+      expect(doneSpy).to.have.been.calledOnceWith(1)
     })
   })
 })

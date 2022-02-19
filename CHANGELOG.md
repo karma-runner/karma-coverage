@@ -1,3 +1,30 @@
+# [2.2.0](https://github.com/karma-runner/karma-coverage/compare/v2.1.1...v2.2.0) (2022-02-10)
+
+
+### Features
+
+* update Istanbul packages ([24aac11](https://github.com/karma-runner/karma-coverage/commit/24aac11aacef75aab720f69aabaa9651cc770630))
+
+## [2.1.1](https://github.com/karma-runner/karma-coverage/compare/v2.1.0...v2.1.1) (2022-02-05)
+
+
+### Bug Fixes
+
+* handle unexpected error when generating code coverage ([bca2c69](https://github.com/karma-runner/karma-coverage/commit/bca2c69d43332598acb30d8e5d6e26d783bc06fb)), closes [/github.com/karma-runner/karma/blob/c985155a4eac95c525e1217e98d4013ac5f53305/lib/server.js#L392](https://github.com//github.com/karma-runner/karma/blob/c985155a4eac95c525e1217e98d4013ac5f53305/lib/server.js/issues/L392)
+* race condition between the Karma shutdown and coverage writing ([44b31eb](https://github.com/karma-runner/karma-coverage/commit/44b31eba5a221e6e049b6dff426207f555b379e2)), closes [#434](https://github.com/karma-runner/karma-coverage/issues/434)
+
+# [2.1.0](https://github.com/karma-runner/karma-coverage/compare/v2.0.3...v2.1.0) (2021-12-01)
+
+
+### Bug Fixes
+
+* **deps:** update main and dev dependencies ([c20d982](https://github.com/karma-runner/karma-coverage/commit/c20d982607168ccc302f1cca576dbbbdac0a1af6))
+
+
+### Features
+
+* **reporter:** log coverage threshold as a warning fixed [#432](https://github.com/karma-runner/karma-coverage/issues/432) ([a6c95d8](https://github.com/karma-runner/karma-coverage/commit/a6c95d8fb932a4191474e6504174df7bc9a6fe60))
+
 ## [2.0.3](https://github.com/karma-runner/karma-coverage/compare/v2.0.2...v2.0.3) (2020-07-24)
 
 
