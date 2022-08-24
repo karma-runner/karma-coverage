@@ -11,19 +11,20 @@ on:
 jobs:
   linux:
     name: "Node ${{ matrix.node }} on Linux: Test and Lint"
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest, ubuntu-22.04]
     env:
       DISPLAY: ":0"
     strategy:
       matrix:
         node:
-          - 10
-          - 12
+          - 14
+          - 16
+          - 18
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
           cache: npm
@@ -50,11 +51,12 @@ jobs:
     strategy:
       matrix:
         node:
-          - 10
-          - 12
+          - 14
+          - 16
+          - 18
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
           cache: npm
