@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/karma-runner/karma-coverage/compare/v2.2.0...v2.2.1) (2023-06-23)
+
+
+### Bug Fixes
+
+* exit code when reporter file is not provided ([1388186](https://github.com/karma-runner/karma-coverage/commit/13881868dc9c488099ec885e1fde134f4e3dfb11))
+
 # [2.2.0](https://github.com/karma-runner/karma-coverage/compare/v2.1.1...v2.2.0) (2022-02-10)
 
 
