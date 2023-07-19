@@ -113,6 +113,22 @@ module.exports = function(config) {
 };
 ```
 
+#### Error: karma-coverage must be installed in order to run code coverage.
+
+Sometimes Karma doesn't load plugins starting with `karma-` automatically (see this [official documentation](http://karma-runner.github.io/6.1/config/plugins.html)). If you encounter this issue, you can explicitly add `karma-coverage` into `plugins` configuration settings.
+
+```javascript
+// karma.conf.js
+module.exports = function(config) {
+  config.set({
+    plugins: [
+      require('karma-coverage') // add this line
+    ],
+    reporters: ['progress', 'coverage']
+  });
+};
+```
+
 ----
 
 For more information on Karma see the [homepage].
