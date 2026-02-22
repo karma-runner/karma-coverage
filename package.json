@@ -30,7 +30,7 @@
     "istanbul-lib-report": "^3.0.0",
     "istanbul-lib-source-maps": "^4.0.1",
     "istanbul-reports": "^3.0.5",
-    "minimatch": "^3.0.4"
+    "minimatch": "^10.2.1"
   },
   "license": "MIT",
   "devDependencies": {
